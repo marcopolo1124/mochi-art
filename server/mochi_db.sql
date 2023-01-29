@@ -28,5 +28,6 @@ CREATE TABLE site.state (
 CREATE TABLE site.gallery_images (
     file_name VARCHAR(36) PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    image_description VARCHAR(10000)
+    image_description VARCHAR(10000),
+    date_posted TIMESTAMP
 );
