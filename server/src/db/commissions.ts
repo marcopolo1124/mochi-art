@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import pool from "./pool";
 import crypto from "crypto"
+import { Status, RequestParams, ResponseBody,
+         RequestBody, StatusQuery, IdQuery,
+         CommissionBody, RequestQuery } from "./interfaces";
 
 export async function getCommissionsWithStatus(req: Request<RequestParams, ResponseBody, RequestBody, StatusQuery>, res: Response){
     
@@ -65,27 +68,4 @@ export async function postCommission(req: Request<RequestParams, ResponseBody, C
     }
     await Promise.all(promises)
     res.status(201).send({message: 'commission pending'})
-}
-
-type Status = 'pending' | 'completed' | 'rejected' | 'accepted'
-interface RequestParams {}
-
-interface ResponseBody {}
-
-interface RequestBody {}
-
-interface RequestQuery {}
-
-interface StatusQuery {
-  status?: Status;
-}
-
-interface IdQuery {
-    id: string;
-}
-
-interface CommissionBody {
-    email: string;
-    commission_detail: string;
-    images: [string]
 }

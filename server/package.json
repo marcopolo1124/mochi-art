@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "npx tsc --watch",
-        "devStart": "nodemon -q dist/index.js",
+        "devStart": "nodemon -q dist/src/index.js",
         "start": "node dist/index.js"
     },
     "author": "",
@@ -19,6 +19,7 @@
         "express-flash": "0.0.2",
         "express-session": "^1.17.3",
         "method-override": "^3.0.0",
+        "multer": "^1.4.5-lts.1",
         "passport": "^0.6.0",
         "passport-local": "^1.0.0",
         "pg": "^8.8.0"
@@ -26,6 +27,7 @@
     "devDependencies": {
         "@types/bcrypt": "^5.0.0",
         "@types/express": "^4.17.16",
+        "@types/multer": "^1.4.7",
         "@types/node": "^18.11.18",
         "@types/pg": "^8.6.6",
         "concurrently": "^7.6.0",
