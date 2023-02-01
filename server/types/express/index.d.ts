@@ -4,6 +4,7 @@ declare global {
         interface Request {
         state?: boolean;
         admin?: AdminUser;
+        fileName?: string
         }
     }
 }

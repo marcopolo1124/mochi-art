@@ -1,13 +1,14 @@
 import pool from './pool'
 import { Response, Request, NextFunction } from 'express'
 import { Pagination } from '../../types/custom'
+import { RequestParams, ResponseBody,
+        RequestBody, RequestQuery, AddImageBody, PaginationBody} from "./interfaces";
 
 export async function getState(req: Request, res: Response, next: NextFunction){
     const state = await pool.query(
         'SELECT commission_open FROM site.state'
     )
-    req.state = state.rows[0]
-    next()
+    res.send(state.rows[0])
 }
 
 export async function toggleState(req: Request, res: Response){
@@ -18,18 +19,19 @@ export async function toggleState(req: Request, res: Response){
     res.send({message: 'updated'})
 }
 
-export async function postImage(req: Request, res: Response){
-    const {fileName, title, description} = req.body
+export async function postImage(req: Request<RequestParams, ResponseBody, AddImageBody, RequestQuery>, res: Response){
+    const fileName = req.fileName
+    const {title, description} = req.body
     const datePosted = new Date()
     await pool.query(
-        'INSERT INTO site.gallery_images (file_name, title, description, date_posted)\
+        'INSERT INTO site.gallery_images (file_name, title, image_description, date_posted)\
          VALUES ($1, $2, $3, $4)',
         [fileName, title, description, datePosted]
     )
     res.status(201).send({message: 'image added'})
 }
 
-export async function getGallery(req: Request, res: Response){
+export async function getGallery(req: Request<RequestParams, ResponseBody, PaginationBody, RequestQuery>, res: Response){
     const {perPage, orderBy, page}: Pagination = req.body
     const rowCount = pool.query(
         'SELECT COUNT(*) FROM site.gallery_images'
@@ -43,4 +45,13 @@ export async function getGallery(req: Request, res: Response){
         images: await images,
         rowCount: await rowCount
     })
+}
+
+export async function deleteImage(req: Request, res: Response){
+    const {fileName} = req.body
+    await pool.query(
+        'DELETE FROM site.gallery_images WHERE file_name=$1',
+        [fileName]
+    )
+    res.status(204).send({message: 'deleted'})
 }
