@@ -2,7 +2,7 @@ import pool from './pool'
 import { Response, Request, NextFunction } from 'express'
 import { Pagination } from '../../types/custom'
 import { RequestParams, ResponseBody,
-        RequestBody, RequestQuery, AddImageBody, PaginationBody} from "./interfaces";
+        RequestBody, RequestQuery, AddImageBody, PaginationQuery} from "./interfaces";
 
 export async function getState(req: Request, res: Response, next: NextFunction){
     const state = await pool.query(
@@ -31,8 +31,8 @@ export async function postImage(req: Request<RequestParams, ResponseBody, AddIma
     res.status(201).send({message: 'image added'})
 }
 
-export async function getGallery(req: Request<RequestParams, ResponseBody, PaginationBody, RequestQuery>, res: Response){
-    const {perPage, orderBy, page}: Pagination = req.body
+export async function getGallery(req: Request<RequestParams, ResponseBody, RequestBody, PaginationQuery>, res: Response){
+    const {perPage, orderBy, page}: Pagination = req.query
     const rowCount = pool.query(
         'SELECT COUNT(*) FROM site.gallery_images'
     )
@@ -42,8 +42,8 @@ export async function getGallery(req: Request<RequestParams, ResponseBody, Pagin
     )
 
     res.send({
-        images: await images,
-        rowCount: await rowCount
+        images: (await images).rows,
+        rowCount: (await rowCount).rows[0].count
     })
 }
 

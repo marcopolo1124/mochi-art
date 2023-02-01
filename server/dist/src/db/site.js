@@ -42,12 +42,12 @@ function postImage(req, res) {
 exports.postImage = postImage;
 function getGallery(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { perPage, orderBy, page } = req.body;
+        const { perPage, orderBy, page } = req.query;
         const rowCount = pool_1.default.query('SELECT COUNT(*) FROM site.gallery_images');
         const images = pool_1.default.query('SELECT * FROM site.gallery_images ORDER BY $1 OFFSET $2 LIMIT $3', [orderBy, perPage * (page - 1), perPage]);
         res.send({
-            images: yield images,
-            rowCount: yield rowCount
+            images: (yield images).rows,
+            rowCount: (yield rowCount).rows[0].count
         });
     });
 }

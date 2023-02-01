@@ -1,13 +1,18 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import Head from 'next/head'
 import Navbar from './NavBar'
 import Footer from './Footer'
 
-const Layout = ({children}) => {
+type LayoutProps = {
+  children: ReactElement,
+}
+
+const Layout = (props: LayoutProps) => {
+  const {children} = props
   return (
     <div className='layout'>
       <Head>
-        <title>JS Mastery Store</title>
+        <title>Miiyachi art store</title>
       </Head>
       <header>
         <Navbar />

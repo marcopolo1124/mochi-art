@@ -30,7 +30,7 @@ export interface AddImageBody {
 
 type orderBy = "date_posted" | "titles"
 
-export interface PaginationBody {
+export interface PaginationQuery {
   orderBy: orderBy;
   perPage: number;
   page: number;

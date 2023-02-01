@@ -7,9 +7,15 @@ const express_1 = __importDefault(require("express"));
 const site_state_1 = __importDefault(require("./routes/site_state"));
 const images_1 = __importDefault(require("./routes/images"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200,
+    credentials: true
+}));
 app.use('/state', site_state_1.default);
 app.use('/images', images_1.default);
 app.set("view_engine", "ejs");
