@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import { Image } from '@/types'
 import { HeroBanner, GalleryImage } from '../components'
-import { getImages } from '@/lib'
+import { getFeatured } from '@/lib'
 
 const Home = () => {
   const [images, setImages]= useState<Image[]>([])
   useEffect(() => {
-    getImages("title", 1, 10)
+    getFeatured()
       .then((value) => {
-        if (value.rowCount > 0){
+        if (value.images.length > 0){
           setImages(value.images)
         }
+        console.log(images)
       })
   }, [])
   return (
@@ -26,7 +27,8 @@ const Home = () => {
               title={image.title}
               file_name={image.file_name}
               image_description={image.image_description}
-              date_posted={image.date_posted}/>)}
+              date_posted={image.date_posted}
+              featured={image.featured}/>)}
         </div>
     </>
   )

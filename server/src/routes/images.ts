@@ -19,6 +19,7 @@ const upload = multer({storage: storage})
 const images = express.Router()
 
 images.get('/', db.getGallery)
+images.get('/featured', db.getFeatured)
 
 images.post('/upload', upload.single('image'), db.postImage)
 

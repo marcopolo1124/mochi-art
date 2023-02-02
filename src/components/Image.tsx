@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image } from '@/types'
 const GalleryImage = ({title, file_name}: Image) => {
+  console.log(file_name)
   return (
     <div>
         <div className="product-card">
@@ -10,7 +11,6 @@ const GalleryImage = ({title, file_name}: Image) => {
             height={250}
             className="product-image"
           />
-          <p className='product-name'>{title}</p>
 
         </div>
     </div>

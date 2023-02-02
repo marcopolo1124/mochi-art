@@ -12,23 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteImage = exports.getGallery = exports.postImage = exports.toggleState = exports.getState = void 0;
+exports.deleteImage = exports.getGallery = exports.getFeatured = exports.postImage = exports.toggleArtTradeState = exports.toggleCommissionState = exports.getState = void 0;
 const pool_1 = __importDefault(require("./pool"));
 function getState(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const state = yield pool_1.default.query('SELECT commission_open FROM site.state');
+        const state = yield pool_1.default.query('SELECT commission_open, art_trade_open FROM site.state');
         res.send(state.rows[0]);
     });
 }
 exports.getState = getState;
-function toggleState(req, res) {
+function toggleCommissionState(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         yield pool_1.default.query('UPDATE site.state \
          SET commission_open = NOT commission_open');
         res.send({ message: 'updated' });
     });
 }
-exports.toggleState = toggleState;
+exports.toggleCommissionState = toggleCommissionState;
+function toggleArtTradeState(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield pool_1.default.query('UPDATE site.state \
+         SET art_trade_open = NOT art_trade_open');
+        res.send({ message: 'updated' });
+    });
+}
+exports.toggleArtTradeState = toggleArtTradeState;
 function postImage(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const fileName = req.fileName;
@@ -40,6 +48,13 @@ function postImage(req, res) {
     });
 }
 exports.postImage = postImage;
+function getFeatured(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const featured = yield pool_1.default.query('SELECT * FROM site.gallery_images WHERE featured=true ORDER BY title LIMIT 10');
+        res.send({ images: featured.rows });
+    });
+}
+exports.getFeatured = getFeatured;
 function getGallery(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { perPage, orderBy, page } = req.query;

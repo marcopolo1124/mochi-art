@@ -6,15 +6,23 @@ import { RequestParams, ResponseBody,
 
 export async function getState(req: Request, res: Response, next: NextFunction){
     const state = await pool.query(
-        'SELECT commission_open FROM site.state'
+        'SELECT commission_open, art_trade_open FROM site.state'
     )
     res.send(state.rows[0])
 }
 
-export async function toggleState(req: Request, res: Response){
+export async function toggleCommissionState(req: Request, res: Response){
     await pool.query(
         'UPDATE site.state \
          SET commission_open = NOT commission_open'
+    )
+    res.send({message: 'updated'})
+}
+
+export async function toggleArtTradeState(req: Request, res: Response){
+    await pool.query(
+        'UPDATE site.state \
+         SET art_trade_open = NOT art_trade_open'
     )
     res.send({message: 'updated'})
 }
@@ -29,6 +37,13 @@ export async function postImage(req: Request<RequestParams, ResponseBody, AddIma
         [fileName, title, description, datePosted]
     )
     res.status(201).send({message: 'image added'})
+}
+
+export async function getFeatured(req: Request, res: Response){
+    const featured = await pool.query(
+        'SELECT * FROM site.gallery_images WHERE featured=true ORDER BY title LIMIT 10',
+    )
+    res.send({images: featured.rows})
 }
 
 export async function getGallery(req: Request<RequestParams, ResponseBody, RequestBody, PaginationQuery>, res: Response){

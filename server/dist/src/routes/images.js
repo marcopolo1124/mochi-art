@@ -21,6 +21,7 @@ const storage = multer_1.default.diskStorage({
 const upload = (0, multer_1.default)({ storage: storage });
 const images = express_1.default.Router();
 images.get('/', db_1.default.getGallery);
+images.get('/featured', db_1.default.getFeatured);
 images.post('/upload', upload.single('image'), db_1.default.postImage);
 images.delete('/delete', db_1.default.deleteImage);
 exports.default = images;

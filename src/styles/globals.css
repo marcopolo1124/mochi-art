@@ -2,18 +2,26 @@ html,
 body, * {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   box-sizing: border-box;
-
 }
 ::-webkit-scrollbar {
   width: 0px;
 }
 
+body {
+  background-color: #333333;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.icons {
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .main-container{
@@ -26,12 +34,49 @@ width: 100%;
   padding: 10px;
 }
 
+.navbar {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid white
+}
 .navbar-container{
   display: flex;
   justify-content: space-between;
-  margin: 6px 18px;
+  align-items: center;
+  max-width: 1400px;
+  margin: auto;
+  width: 100%;
+  padding: 10px;
   position: relative;
+  height: 42px;
+  background-color: black;
 }
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+.close.status-bar{
+  background-color: red;
+}
+
+.open.status-bar{
+  background-color: green
+}
+
+.status-bar-container{
+  margin-bottom: 20px
+}
+
 .marquee-text{
   font-size: 29px;
   font-weight: 600;
@@ -43,6 +88,39 @@ width: 100%;
   height: 400px;
   width: 100%;
   overflow-x: hidden;
+}
+
+span.navbar-menu-item{
+  /* text-transform: uppercase; */
+  padding: 10px 15px;
+  transition: color 0.5s;
+}
+
+.navbar-menu-item{
+  font-size: 14px;
+  color: white
+}
+
+button.navbar-menu-item{
+  border-radius: 15px;
+  padding: 5px 16px;
+  background-color: #f02d34;
+  color: white;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 10px;
+  z-index:10000 !important;
+  transition: background-color 0.5s;
+}
+
+span.navbar-menu-item:hover {
+  color: grey;
+  border-bottom: 3px solid #fe5464;
+}
+
+button.navbar-menu-item:hover {
+  background-color: #b721ff;
 }
 
 .track {
@@ -66,7 +144,8 @@ width: 100%;
 }
 .logo{
   color: gray;
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: 600;
 
 }
 .cart-icon{
@@ -97,7 +176,7 @@ width: 100%;
 .products-container{
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 15px;
   margin-top: 20px;
   width: 100%;
@@ -120,6 +199,8 @@ width: 100%;
 }
 
 .product-name{
+  color: white;
+  font-size: 30px;
   font-weight: 500;
 }
 .product-price{
@@ -129,11 +210,15 @@ width: 100%;
 }
 
 .hero-banner-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 100px 40px;
-  background-color: #dcdcdc;
+  background-color: #ff8787;
+  border: 10px solid white;
   border-radius: 15px;
   position: relative;
-  height: 300px;
+  height: 350px;
   line-height: 0.9; 
   width: 100%;
 
@@ -154,9 +239,10 @@ width: 100%;
   z-index:10000 !important;
 }
 
-.hero-banner-container h3{
-  font-size: 4rem;
+.hero-banner-container h2{
+  font-size: 1rem;
   margin-top: 4px;
+  color: white;
 }
 .hero-banner-container h1{
   color: white;
@@ -172,6 +258,21 @@ width: 100%;
   height: 450px;
 }
 
+
+.stats {
+  color: white;
+  border: 4px solid white;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  padding: 10px 25px;
+  margin: 10px;
+  border-radius: 15px;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .desc{
 position: absolute;
@@ -197,13 +298,13 @@ text-align: end;
   align-self: flex-end;
 }
 .products-heading{
-  text-align: center;
+
   margin: 40px 0px;
- color: #324d67;
+  color: #898989;
 
 }
 .products-heading h2{
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 800;
 }
 .products-heading p{
@@ -666,8 +767,9 @@ margin-top: 160px;
   .hero-banner-container h1{
     font-size: 50px;
   }
- .hero-banner-container h3{
+ .hero-banner-container h2{
     font-size: 40px;
+    color: hi
   }
   .hero-banner-container button{
     margin-top: 90px;
