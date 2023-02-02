@@ -7,8 +7,8 @@ const GalleryImage = ({title, file_name}: Image) => {
         <div className="product-card">
           <img 
             src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}/${file_name}`}
-            width={250}
-            height={250}
+            // width={250}
+            // height={250}
             className="product-image"
           />
 
