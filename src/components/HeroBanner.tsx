@@ -14,6 +14,7 @@ const HeroBanner = () => {
         
         <h1>MIIYACHI</h1>
         <h3 id="hero-banner-subtext">Artist  //  Hobbyist  //  Digital Art</h3>
+        <Link href="/commissions"><div id="hero-banner-button">Order a commission now!</div></Link>
         {/* <Image src='/Peupie_Transparent.png' alt="Avatar" height={1000} width={1000} className='hero-banner-image' /> */}
 
 

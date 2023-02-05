@@ -10,7 +10,7 @@ const Navbar = () => {
         </div>
         <div className='navbar-menu'>
           {/* <Link href=""><span className='navbar-menu-item'>Gallery</span></Link> */}
-          <Link href="/commissions"><span className='navbar-menu-item'>Commissions</span></Link>
+          {/* <Link href="/commissions"><span className='navbar-menu-item'>Commissions</span></Link> */}
           {/* <Link href="/terms-of-service"><span className='navbar-menu-item' >Terms of Service</span></Link> */}
           {/* <Link href=""><span className='navbar-menu-item'>Contact</span></Link> */}
         </div>
