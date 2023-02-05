@@ -8,7 +8,6 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) =>{
         const fileName = Date.now() + path.extname(file.originalname)
-        console.log(file)
         cb(null, fileName)
         req.fileName=fileName
     }
@@ -19,6 +18,8 @@ const upload = multer({storage: storage})
 const images = express.Router()
 
 images.get('/', db.getGallery)
+images.get('/featured', db.getFeatured)
+images.get('/:fileName', db.getImage)
 
 images.post('/upload', upload.single('image'), db.postImage)
 

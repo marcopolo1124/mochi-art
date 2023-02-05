@@ -10,10 +10,13 @@ exports.default = {
     deleteAdmin: admin_1.deleteAdmin,
     getState: site_1.getState,
     getGallery: site_1.getGallery,
-    toggleState: site_1.toggleState,
+    toggleArtTradeState: site_1.toggleArtTradeState,
+    toggleCommissionState: site_1.toggleCommissionState,
     postImage: site_1.postImage,
     deleteImage: site_1.deleteImage,
     getCommission: commissions_1.getCommission,
     getCommissionsWithStatus: commissions_1.getCommissionsWithStatus,
-    postCommission: commissions_1.postCommission
+    postCommission: commissions_1.postCommission,
+    getFeatured: site_1.getFeatured,
+    getImage: site_1.getImage
 };

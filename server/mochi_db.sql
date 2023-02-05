@@ -22,6 +22,7 @@ CREATE TABLE commissions.commission_images (
 CREATE TABLE site.state (
     lock char(1) DEFAULT 'X',
     commission_open boolean,
+    art_trade_open boolean,
     constraint pk_site_state PRIMARY KEY (lock),
     constraint check_state_lock CHECK (lock='X')
 )
