@@ -38,9 +38,11 @@ function putRequest({url, route, body}: RequestOptions){
 }
 
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
+    const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
+    console.log(route)
     const imagesRequest = await getRequest({
         url: ServerUrl,
-        route: `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
+        route
     })
     if (imagesRequest.ok){
         return await imagesRequest.json()
@@ -48,6 +50,20 @@ export const getImages = async (orderBy: string, page: number, perPage: number) 
         throw new Error()
     }
 }
+
+export const getImage = async (fileName: string) => {
+    const route = `/images/${fileName}`
+    const imageRequest = await getRequest({
+        url: ServerUrl,
+        route
+    })
+    if (imageRequest.ok){
+        return await imageRequest.json()
+    } else{
+        throw new Error()
+    }
+}
+
 
 export const getFeatured = async () => {
     const imagesRequest = await getRequest({

@@ -1,37 +1,27 @@
-import React, {useEffect, useState} from 'react'
-import { Image } from '@/types'
-import { HeroBanner, GalleryImage } from '../components'
-import { getFeatured } from '@/lib'
+import { getFeatured, getImages } from '@/lib'
+import React from 'react'
+import { HeroBanner, Gallery, Featured } from '../components'
 
-const Home = () => {
-  const [images, setImages]= useState<Image[]>([])
-  useEffect(() => {
-    getFeatured()
-      .then((value) => {
-        if (value.images.length > 0){
-          setImages(value.images)
-        }
-        console.log(images)
-      })
-  }, [])
+const Home = ({featured, gallery}) => {
   return (
-    <>
+    <div className="home">
         <HeroBanner/>
-        <div className="products-heading">
-            <h2>Featured</h2>
-        </div>
-
-        <div className='products-container'>
-            {images?.map( image => <GalleryImage
-              key={image.file_name}
-              title={image.title}
-              file_name={image.file_name}
-              image_description={image.image_description}
-              date_posted={image.date_posted}
-              featured={image.featured}/>)}
-        </div>
-    </>
+        <main className='main-container'>
+        <Featured images={featured.images}/>
+        <Gallery images={gallery.images}/>
+        </main>
+    </div>
   )
 }
+
+export async function getServerSideProps() {
+  const featured = await getFeatured()
+  const gallery = await getImages("date", 1, 1000)
+  return {props: {featured, gallery}}
+
+}
+
+
+
 
 export default Home

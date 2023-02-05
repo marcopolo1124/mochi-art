@@ -25,7 +25,8 @@ export interface CommissionBody {
 
 export interface AddImageBody {
   title: string;
-  description: string
+  description: string;
+  featured: boolean;
 }
 
 type orderBy = "date_posted" | "titles"

@@ -27,16 +27,23 @@ export async function toggleArtTradeState(req: Request, res: Response){
     res.send({message: 'updated'})
 }
 
-export async function postImage(req: Request<RequestParams, ResponseBody, AddImageBody, RequestQuery>, res: Response){
-    const fileName = req.fileName
-    const {title, description} = req.body
-    const datePosted = new Date()
-    await pool.query(
-        'INSERT INTO site.gallery_images (file_name, title, image_description, date_posted)\
-         VALUES ($1, $2, $3, $4)',
-        [fileName, title, description, datePosted]
-    )
-    res.status(201).send({message: 'image added'})
+export async function postImage(req: Request<RequestParams, ResponseBody, AddImageBody, RequestQuery>, res: Response, next: NextFunction){
+    try{
+        const fileName = req.fileName
+        const {title, description, featured} = req.body
+        const featuredBool = featured? true: false
+        const datePosted = new Date()
+        await pool.query(
+            'INSERT INTO site.gallery_images (file_name, title, image_description, date_posted, featured)\
+            VALUES ($1, $2, $3, $4, $5)',
+            [fileName, title, description, datePosted, featuredBool]
+        )
+        res.status(201).send({message: 'image added'})
+    } catch (e){
+        console.log("Image upload unsuccessful")
+        console.log(e)
+        next()
+    }
 }
 
 export async function getFeatured(req: Request, res: Response){
@@ -48,6 +55,7 @@ export async function getFeatured(req: Request, res: Response){
 
 export async function getGallery(req: Request<RequestParams, ResponseBody, RequestBody, PaginationQuery>, res: Response){
     const {perPage, orderBy, page}: Pagination = req.query
+    console.log(req.query)
     const rowCount = pool.query(
         'SELECT COUNT(*) FROM site.gallery_images'
     )
@@ -69,4 +77,18 @@ export async function deleteImage(req: Request, res: Response){
         [fileName]
     )
     res.status(204).send({message: 'deleted'})
+}
+
+export async function getImage(req:Request, res: Response){
+    const {fileName} = req.params
+    const images = await pool.query(
+        'SELECT * FROM site.gallery_images WHERE file_name=$1',
+        [fileName]
+    )
+    if (images.rows.length > 0){
+        res.send({image: images.rows[0]})
+    } else{
+        res.status(404).send({image: null})
+    }
+    
 }

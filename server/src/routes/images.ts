@@ -20,6 +20,7 @@ const images = express.Router()
 
 images.get('/', db.getGallery)
 images.get('/featured', db.getFeatured)
+images.get('/:fileName', db.getImage)
 
 images.post('/upload', upload.single('image'), db.postImage)
 

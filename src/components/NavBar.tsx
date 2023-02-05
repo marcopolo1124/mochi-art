@@ -5,19 +5,20 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className='navbar-container'>
-        <p className='logo'>
+        <div className='logo'>
           <Link href="/">MIIYACHI</Link>
-        </p>
+        </div>
         <div className='navbar-menu'>
-          <span className='navbar-menu-item'>Gallery</span>
-          <span className='navbar-menu-item'>Commissions</span>
-          <span className='navbar-menu-item'>Terms of Service</span>
-          <button className='navbar-menu-item'>Contact</button>
+          {/* <Link href=""><span className='navbar-menu-item'>Gallery</span></Link> */}
+          <Link href="/commissions"><span className='navbar-menu-item'>Commissions</span></Link>
+          {/* <Link href="/terms-of-service"><span className='navbar-menu-item' >Terms of Service</span></Link> */}
+          {/* <Link href=""><span className='navbar-menu-item'>Contact</span></Link> */}
         </div>
       </div>
     </div>
     
   )
 }
+
 
 export default Navbar

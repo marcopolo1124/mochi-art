@@ -1,18 +1,17 @@
 import React from 'react'
 import { Image } from '@/types'
+import Link from 'next/link'
 const GalleryImage = ({title, file_name}: Image) => {
   console.log(file_name)
   return (
-    <div>
-        <div className="product-card">
-          <img 
-            src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}/${file_name}`}
-            // width={250}
-            // height={250}
-            className="product-image"
-          />
+    <div className="product-card">
+      <Link href={`image/${file_name}`}>
+        <img 
+          src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}/${file_name}`}
+          className="product-image"
+        />
+      </Link>
 
-        </div>
     </div>
   )
 }
