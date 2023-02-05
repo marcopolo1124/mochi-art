@@ -1,8 +1,14 @@
 import { getFeatured, getImages } from '@/lib'
+import { Image } from '@/types'
 import React from 'react'
 import { HeroBanner, Gallery, Featured } from '../components'
 
-const Home = ({featured, gallery}) => {
+type homeProps = {
+  featured: {images: Image[]}
+  gallery: {images: Image[]}
+}
+
+const Home = ({featured, gallery}: homeProps) => {
   return (
     <div className="home">
         <HeroBanner/>

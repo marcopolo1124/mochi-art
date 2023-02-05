@@ -8,7 +8,6 @@ type Images = Image[]
 type imagesProps = {images: Images}
 
 const Featured = ({images}: imagesProps) => {
-    console.log(images)
     return (
         <>
         <div className="products-heading">

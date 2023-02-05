@@ -39,7 +39,6 @@ function putRequest({url, route, body}: RequestOptions){
 
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
     const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
-    console.log(route)
     const imagesRequest = await getRequest({
         url: ServerUrl,
         route

@@ -2,7 +2,6 @@ import React from 'react'
 import { Image } from '@/types'
 import Link from 'next/link'
 const GalleryImage = ({title, file_name}: Image) => {
-  console.log(file_name)
   return (
     <div className="product-card">
       <Link href={`image/${file_name}`}>
