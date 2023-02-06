@@ -43,7 +43,7 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
                   <strong id="open" onClick={handleCommissionClick}>Open</strong>: 
                   <strong id="closed" onClick={handleCommissionClick}>Closed</strong>}
                 </p>
-                <Link href="/terms-of-service"><h3>MAKE SURE TO READ THROUGH MY TERMS OF SERVICE BEFORE ORDERING!</h3></Link>
+                <Link href="/terms-of-service"><h3>MAKE SURE TO CLICK HERE AND READ THROUGH MY TERMS OF SERVICE BEFORE ORDERING!</h3></Link>
             </div>
             <div className="article-div" id="rates">
                 <h3 className="section-title">RATES</h3>
@@ -91,7 +91,7 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
             </div>
             <hr/>
             <div id="order-button-container">
-              <button id="order-button">Go to order form</button>
+              <Link href="/order-form"><button id="order-button">Go to order form</button></Link>
             </div>
             
         </main>

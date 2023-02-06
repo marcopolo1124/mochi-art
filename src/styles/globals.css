@@ -58,11 +58,14 @@ width: 100%;
 
 span.navbar-menu-item{
   /* text-transform: uppercase; */
-  padding: 10px 15px;
+  padding: 6px 15px;
   transition: color 0.5s;
   font-size: 14px;
   color: white;
   width: 100000px;
+  border: 2px solid white;
+  border-radius: 30px;
+  transform: scale(1,1);
 }
 
 .navbar-menu{
@@ -73,8 +76,10 @@ span.navbar-menu-item{
 
 
 span.navbar-menu-item:hover {
-  color: grey;
-  border-bottom: 3px solid #fe5464;
+  transform: scale(1.05, 1.05);
+  background-color: #2f2f2f
+  /* font-size: 12px; */
+
 }
 
 
@@ -439,4 +444,77 @@ table{
 
 #order-button:hover{
   background-color: #f02d34;
+}
+
+form {
+  padding: 30px;
+  color: white;
+  border-radius: 5px;
+  padding: 20px;
+  width: 500px;
+}
+
+/* .input-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+} */
+
+input[type=text], input[type=email], input[type=number], select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=file]{
+  display: none;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #ff8787;
+  color: white;
+  padding: 14px 20px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+}
+
+textarea {
+  padding: 7px 20px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border: none;
+  width: 100%;
+}
+
+input[type=submit]:hover {
+  background-color: #f02d34;
+  text-transform: uppercase;
+}
+
+.upload-label{
+  /* background-color: white; */
+  /* color: black; */
+  border: 2px solid white;
+  border-radius: 4px;
+  padding: 7px 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.upload-label:hover{
+  background-color: #8f8f8f
+}
+
+.file-upload{
+  padding: 10px;
+  border: 2px solid white
 }
