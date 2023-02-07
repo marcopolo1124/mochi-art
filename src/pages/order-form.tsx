@@ -19,6 +19,12 @@ const OrderForm = () => {
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         setReferences(prev => e.target.files? [...prev, ...(Array.from(e.target.files))]: [...prev]);
     };
+
+    const removeReference = (index:number) => {
+        setReferences(prev => prev.filter((_, i) => i !== index))
+        
+    }
+
     return (
         <div>
             <form>
@@ -68,12 +74,12 @@ const OrderForm = () => {
                         <option value="full-render">Full Render</option>
                         <option value="vtuber">Vtuber</option>
                     </select>
-                <label htmlFor='additional-details'>Additional details:</label>
+                <label htmlFor='additional-details'>Additional details (links or any other details):</label>
                 <textarea name='additional-details' onChange={(e) => {setDetails(e.target.value)}}/>
                 <div className="file-upload">
                     <label htmlFor="references" className='upload-label'><FiUpload/> Upload reference files</label>
                     <input type="file" id="references" onChange={handleFileChange} name="references" multiple />
-                    {references.map(reference => <p>{reference.name}</p>)}
+                    {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
                 </div>
                 
 
@@ -83,6 +89,25 @@ const OrderForm = () => {
             </form>
         </div>
     )
+}
+
+type rmfn = (index: number) => void
+type fileProps = {
+    file: File,
+    removeReference: rmfn,
+    index: number
+}
+
+
+
+function FileContainer({file, removeReference, index}: fileProps) {
+    const handleClick = () =>{
+        removeReference(index)
+    }
+    return (
+            <div className="file-container">{file.name}<span onClick={handleClick}>&times;</span></div>
+    )
+    
 }
 
 export default OrderForm
