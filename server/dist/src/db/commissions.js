@@ -50,12 +50,12 @@ function getCommission(req, res) {
 exports.getCommission = getCommission;
 function postCommission(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { email, commission_detail, images } = req.body;
+        const { name, email, characterName, numberOfCharacters, scope, comType, details, images } = req.body;
         const id = crypto_1.default.randomUUID();
         const timestamp = new Date();
         const status = 'pending';
-        yield pool_1.default.query("INSERT INTO commissions.commissions (id, email, commission_detail, date_of_purchase, commission_status)\
-         VALUES ($1, $2, $3, $4, $5)", [id, email, commission_detail, timestamp, status]);
+        yield pool_1.default.query("INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
+         VALUES ($1, $2, $3, $4, $5)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
         const promises = [];
         for (const file_name in images) {
             promises.push(pool_1.default.query("INSERT INTO commissions.commission_images (commission_id, file_name)\

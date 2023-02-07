@@ -49,14 +49,14 @@ export async function getCommission(req: Request<RequestParams, ResponseBody, Re
 }
 
 export async function postCommission(req: Request<RequestParams, ResponseBody, CommissionBody, RequestQuery>, res: Response) {
-    const {email, commission_detail, images} = req.body
+    const {name, email, characterName, numberOfCharacters, scope, comType, details, images} = req.body
     const id = crypto.randomUUID()
     const timestamp = new Date()
     const status: Status = 'pending'
     await pool.query(
-        "INSERT INTO commissions.commissions (id, email, commission_detail, date_of_purchase, commission_status)\
+        "INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
          VALUES ($1, $2, $3, $4, $5)",
-        [id, email, commission_detail, timestamp, status]
+        [id, name, email, characterName, numberOfCharacters, scope, comType, details]
     )
     const promises = []
     for (const file_name in images) {

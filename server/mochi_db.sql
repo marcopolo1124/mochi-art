@@ -5,11 +5,18 @@ CREATE TABLE users.admin (
 
 CREATE TABLE commissions.commissions (
     id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    commission_detail VARCHAR(10000),
-    date_of_purchase TIMESTAMP NOT NULL,
-    commission_status VARCHAR(20) NOT NULL,
-    CONSTRAINT status_chk CHECK (commission_status = 'pending' OR commission_status = 'accepted' OR commission_status = 'rejected' OR commission_status = 'completed')
+    character_name VARCHAR(100),
+    number_of_characters INTEGER,
+    scope VARCHAR(20) NOT NULL,
+    com_type VARCHAR(20) NOT NULL,
+    details VARCHAR(10000),
+    date_of_purchase TIMESTAMP NOT NULL DEFAULT now(),
+    commission_status VARCHAR(20) DEFAULT 'pending' NOT NULL,
+    CONSTRAINT status_chk CHECK (commission_status in ('pending', 'in-progress', 'rejected', 'completed')),
+    CONSTRAINT scope_chk CHECK (scope in ('bust', 'half-body', 'full-body')),
+    CONSTRAINT com_type_check CHECK (com_type in ('sketch', 'colored-sketch', 'full-render', 'vtuber'))
 );
 
 CREATE TABLE commissions.commission_images (

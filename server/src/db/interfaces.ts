@@ -17,10 +17,19 @@ export interface IdQuery {
   id: string;
 }
 
+type Scope = 'bust'| 'half-body'| 'full-body'
+type ComType = 'sketch' | 'colored-sketch' | 'full-render' | 'vtuber'
+
+
 export interface CommissionBody {
-  email: string;
-  commission_detail: string;
-  images: [string]
+  name: string,
+  email: string,
+  characterName: string,
+  numberOfCharacters: string,
+  scope: Scope,
+  comType: ComType,
+  details:string
+  images: string[]
 }
 
 export interface AddImageBody {
