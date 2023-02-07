@@ -9,8 +9,8 @@ type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | "
 const OrderForm = () => {
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const [commissionScope, setCommissionScope] = useState<CommissionScope>("")
-    const [commissionType, setCommissionType] = useState<CommissionType>("")
+    const [commissionScope, setCommissionScope] = useState<string>("bust")
+    const [commissionType, setCommissionType] = useState<string>("sketch")
     const [characterName, setCharacterName] = useState<string>("")
     const [numberOfCharcters, setNumberOfCharacters] = useState<number>(1)
     const [details, setDetails] = useState<string>("")
@@ -84,13 +84,13 @@ const OrderForm = () => {
                     onChange={(e) => {setNumberOfCharacters(parseInt(e.target.value))}}
                 />
                 <label htmlFor="scope">Select a scope:</label>
-                    <select id="scope" name="scope">
+                    <select id="scope" name="scope" onChange={(e) => {setCommissionScope(e.target.value)}}>
                         <option value="bust">Bust</option>
                         <option value="half-body">Half Body</option>
                         <option value="full-body">Full Body</option>
                     </select>
                 <label htmlFor="type">Select a type:</label>
-                    <select id="type" name="type">
+                    <select id="type" name="type" onChange={(e) => {setCommissionType(e.target.value)}}>
                         <option value="sketch">Sketch</option>
                         <option value="colored-sketch">Colored Sketch</option>
                         <option value="full-render">Full Render</option>

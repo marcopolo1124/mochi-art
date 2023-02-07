@@ -21,7 +21,7 @@ CREATE TABLE commissions.commissions (
 
 CREATE TABLE commissions.commission_images (
     commission_id VARCHAR(36) NOT NULL,
-    file_name VARCHAR(36) NOT NULL PRIMARY KEY,
+    file_name VARCHAR(50) NOT NULL PRIMARY KEY,
     CONSTRAINT commission_fk
         FOREIGN KEY (commission_id) REFERENCES commissions.commissions(id)
 );

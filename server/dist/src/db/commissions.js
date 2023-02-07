@@ -58,13 +58,10 @@ function postCommission(req, res) {
         yield pool_1.default.query("INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
         // const promises = []
-        // for (const fileName in images) {
-        //     promises.push(pool.query(
-        //         "INSERT INTO commissions.commission_images (commission_id, file_name)\
-        //          VALUES ($1, $2)",
-        //         [id, fileName]
-        //     ))
-        // }
+        images.references.forEach((reference) => {
+            pool_1.default.query("INSERT INTO commissions.commission_images (commission_id, file_name)\
+             VALUES ($1, $2)", [id, reference.filename]);
+        });
         // await Promise.all(promises)
         res.status(201).send({ message: 'commission pending' });
     });

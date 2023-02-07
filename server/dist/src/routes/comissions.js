@@ -7,12 +7,13 @@ const db_1 = __importDefault(require("../db"));
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
+const crypto_1 = __importDefault(require("crypto"));
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
         cb(null, process.env.COMMISSION_PATH ? process.env.COMMISSION_PATH : "../commission_images");
     },
     filename: (req, file, cb) => {
-        const fileName = Date.now() + path_1.default.extname(file.originalname);
+        const fileName = crypto_1.default.randomUUID() + path_1.default.extname(file.originalname);
         cb(null, fileName);
     }
 });

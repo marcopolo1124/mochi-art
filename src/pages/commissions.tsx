@@ -34,6 +34,8 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
       setArtTradeStatus(prev => !prev)
       toggleArtTradeStatus()
     }
+
+
   return (
     <div>
         <main className="article-container">

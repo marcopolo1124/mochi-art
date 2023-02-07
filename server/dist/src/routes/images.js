@@ -12,7 +12,7 @@ const storage = multer_1.default.diskStorage({
         cb(null, process.env.GALLERY_PATH ? process.env.GALLERY_PATH : "../gallery_images");
     },
     filename: (req, file, cb) => {
-        const fileName = Date.now() + path_1.default.extname(file.originalname);
+        const fileName = crypto.randomUUID() + path_1.default.extname(file.originalname);
         cb(null, fileName);
         req.fileName = fileName;
     }

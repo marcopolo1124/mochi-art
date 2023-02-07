@@ -49,7 +49,7 @@ export async function getCommission(req: Request<RequestParams, ResponseBody, Re
 }
 
 export async function postCommission(req: Request<RequestParams, ResponseBody, CommissionBody, RequestQuery>, res: Response) {
-    const images = req.files
+    const images = req.files as { [references: string]: Express.Multer.File[] };
     console.log(images)
     console.log(req.body)
     const {name, email, characterName, numberOfCharacters, scope, comType, details} = req.body
@@ -60,13 +60,13 @@ export async function postCommission(req: Request<RequestParams, ResponseBody, C
         [id, name, email, characterName, numberOfCharacters, scope, comType, details]
     )
     // const promises = []
-    // for (const fileName in images) {
-    //     promises.push(pool.query(
-    //         "INSERT INTO commissions.commission_images (commission_id, file_name)\
-    //          VALUES ($1, $2)",
-    //         [id, fileName]
-    //     ))
-    // }
+    images.references.forEach((reference) => {
+        pool.query(
+            "INSERT INTO commissions.commission_images (commission_id, file_name)\
+             VALUES ($1, $2)",
+            [id, reference.filename]
+        )
+    })
     // await Promise.all(promises)
     res.status(201).send({message: 'commission pending'})
 }

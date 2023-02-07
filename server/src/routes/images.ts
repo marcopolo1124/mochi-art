@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
         cb(null, process.env.GALLERY_PATH?process.env.GALLERY_PATH: "../gallery_images")
     },
     filename: (req, file, cb) =>{
-        const fileName = Date.now() + path.extname(file.originalname)
+        const fileName = crypto.randomUUID() + path.extname(file.originalname)
         cb(null, fileName)
         req.fileName=fileName
     }
