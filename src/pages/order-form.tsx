@@ -1,5 +1,6 @@
 import React, {useState, ChangeEvent, useEffect} from 'react'
 import {FiUpload} from 'react-icons/fi'
+import Link from 'next/link'
 
 type CommissionScope = "bust" | "half-body" | "full-body" | null
 type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | null
@@ -12,6 +13,7 @@ const OrderForm = () => {
     const [characterName, setCharacterName] = useState<string>("")
     const [numberOfCharcters, setNumberOfCharacters] = useState<number>(1)
     const [details, setDetails] = useState<string>("")
+    const [agreed, setAgreed] = useState<boolean>(false)
     const [references, setReferences] = useState<File[]>([]);
     useEffect(() => {
         console.log(references)
@@ -23,6 +25,10 @@ const OrderForm = () => {
     const removeReference = (index:number) => {
         setReferences(prev => prev.filter((_, i) => i !== index))
         
+    }
+
+    const handleCheck = () => {
+        setAgreed(prev => !prev)
     }
 
     return (
@@ -74,13 +80,16 @@ const OrderForm = () => {
                         <option value="full-render">Full Render</option>
                         <option value="vtuber">Vtuber</option>
                     </select>
-                <label htmlFor='additional-details'>Additional details (links or any other details):</label>
+                <label htmlFor='additional-details'>Additional details (include links to any reference):</label>
                 <textarea name='additional-details' onChange={(e) => {setDetails(e.target.value)}}/>
                 <div className="file-upload">
                     <label htmlFor="references" className='upload-label'><FiUpload/> Upload reference files</label>
                     <input type="file" id="references" onChange={handleFileChange} name="references" multiple />
                     {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
                 </div>
+                
+                <input name="agree" type={"checkbox"} onClick={handleCheck} required/>
+                <label htmlFor="agree">I have read and agreed to the <Link href="/terms-of-service"><span className="terms-link">terms of service</span></Link></label>
                 
 
                 <input type={"submit"} value="SUBMIT"/>
