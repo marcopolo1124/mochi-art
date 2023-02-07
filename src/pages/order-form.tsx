@@ -1,15 +1,16 @@
 import React, {useState, ChangeEvent, useEffect} from 'react'
 import {FiUpload} from 'react-icons/fi'
 import Link from 'next/link'
+import { postCommission } from '@/lib'
 
-type CommissionScope = "bust" | "half-body" | "full-body" | null
-type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | null
+type CommissionScope = "bust" | "half-body" | "full-body" | ""
+type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | ""
 
 const OrderForm = () => {
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const [commissionScope, setCommissionScope] = useState<CommissionScope>(null)
-    const [commissionType, setCommissionType] = useState<CommissionType>(null)
+    const [commissionScope, setCommissionScope] = useState<CommissionScope>("")
+    const [commissionType, setCommissionType] = useState<CommissionType>("")
     const [characterName, setCharacterName] = useState<string>("")
     const [numberOfCharcters, setNumberOfCharacters] = useState<number>(1)
     const [details, setDetails] = useState<string>("")
@@ -31,9 +32,24 @@ const OrderForm = () => {
         setAgreed(prev => !prev)
     }
 
+    const handleSubmit = () =>{
+        const formData = new FormData()
+        formData.append("name", name)
+        formData.append("email", email)
+        formData.append("scope", commissionScope)
+        formData.append("comType", commissionType)
+        formData.append("details", details)
+        formData.append("characterName", characterName)
+        formData.append("numberOfCharacters", numberOfCharcters.toString())
+        references.forEach(file => {
+            formData.append("references", file)
+        })
+        postCommission(formData)
+      }
+
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor='name'>Name:</label>
                 <input
                     name='name'

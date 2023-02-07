@@ -37,6 +37,7 @@ function putRequest({url, route, body}: RequestOptions){
     )
 }
 
+
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
     const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
     const imagesRequest = await getRequest({
@@ -110,4 +111,15 @@ export const toggleArtTradeStatus = async () => {
     } else{
         throw new Error()
     }
+}
+
+export function postCommission(data: FormData){
+    fetch(
+        `${ServerUrl}/commissions/upload`,
+        {
+            method: 'POST',
+            body: data,
+            credentials: 'include'
+        }
+    ) 
 }

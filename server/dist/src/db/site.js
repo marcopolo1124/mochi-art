@@ -42,6 +42,7 @@ function postImage(req, res, next) {
         try {
             const fileName = req.fileName;
             const { title, description, featured } = req.body;
+            console.log(req.body);
             const featuredBool = featured ? true : false;
             const datePosted = new Date();
             yield pool_1.default.query('INSERT INTO site.gallery_images (file_name, title, image_description, date_posted, featured)\

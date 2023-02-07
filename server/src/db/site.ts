@@ -31,6 +31,7 @@ export async function postImage(req: Request<RequestParams, ResponseBody, AddIma
     try{
         const fileName = req.fileName
         const {title, description, featured} = req.body
+        console.log(req.body)
         const featuredBool = featured? true: false
         const datePosted = new Date()
         await pool.query(

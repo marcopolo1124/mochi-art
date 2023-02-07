@@ -50,18 +50,22 @@ function getCommission(req, res) {
 exports.getCommission = getCommission;
 function postCommission(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { name, email, characterName, numberOfCharacters, scope, comType, details, images } = req.body;
+        const images = req.files;
+        console.log(images);
+        console.log(req.body);
+        const { name, email, characterName, numberOfCharacters, scope, comType, details } = req.body;
         const id = crypto_1.default.randomUUID();
-        const timestamp = new Date();
-        const status = 'pending';
         yield pool_1.default.query("INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
-        const promises = [];
-        for (const file_name in images) {
-            promises.push(pool_1.default.query("INSERT INTO commissions.commission_images (commission_id, file_name)\
-             VALUES ($1, $2)", [id, file_name]));
-        }
-        yield Promise.all(promises);
+        // const promises = []
+        // for (const fileName in images) {
+        //     promises.push(pool.query(
+        //         "INSERT INTO commissions.commission_images (commission_id, file_name)\
+        //          VALUES ($1, $2)",
+        //         [id, fileName]
+        //     ))
+        // }
+        // await Promise.all(promises)
         res.status(201).send({ message: 'commission pending' });
     });
 }

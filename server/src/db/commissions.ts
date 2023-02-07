@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import pool from "./pool";
 import crypto from "crypto"
-import { Status, RequestParams, ResponseBody,
+import { RequestParams, ResponseBody,
          RequestBody, StatusQuery, IdQuery,
          CommissionBody, RequestQuery } from "./interfaces";
 
@@ -49,23 +49,24 @@ export async function getCommission(req: Request<RequestParams, ResponseBody, Re
 }
 
 export async function postCommission(req: Request<RequestParams, ResponseBody, CommissionBody, RequestQuery>, res: Response) {
-    const {name, email, characterName, numberOfCharacters, scope, comType, details, images} = req.body
+    const images = req.files
+    console.log(images)
+    console.log(req.body)
+    const {name, email, characterName, numberOfCharacters, scope, comType, details} = req.body
     const id = crypto.randomUUID()
-    const timestamp = new Date()
-    const status: Status = 'pending'
     await pool.query(
         "INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
         [id, name, email, characterName, numberOfCharacters, scope, comType, details]
     )
-    const promises = []
-    for (const file_name in images) {
-        promises.push(pool.query(
-            "INSERT INTO commissions.commission_images (commission_id, file_name)\
-             VALUES ($1, $2)",
-            [id, file_name]
-        ))
-    }
-    await Promise.all(promises)
+    // const promises = []
+    // for (const fileName in images) {
+    //     promises.push(pool.query(
+    //         "INSERT INTO commissions.commission_images (commission_id, file_name)\
+    //          VALUES ($1, $2)",
+    //         [id, fileName]
+    //     ))
+    // }
+    // await Promise.all(promises)
     res.status(201).send({message: 'commission pending'})
 }
