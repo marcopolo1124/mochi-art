@@ -55,7 +55,7 @@ export async function postCommission(req: Request<RequestParams, ResponseBody, C
     const status: Status = 'pending'
     await pool.query(
         "INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
-         VALUES ($1, $2, $3, $4, $5)",
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
         [id, name, email, characterName, numberOfCharacters, scope, comType, details]
     )
     const promises = []

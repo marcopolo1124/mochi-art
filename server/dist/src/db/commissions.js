@@ -55,7 +55,7 @@ function postCommission(req, res) {
         const timestamp = new Date();
         const status = 'pending';
         yield pool_1.default.query("INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
-         VALUES ($1, $2, $3, $4, $5)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
         const promises = [];
         for (const file_name in images) {
             promises.push(pool_1.default.query("INSERT INTO commissions.commission_images (commission_id, file_name)\
