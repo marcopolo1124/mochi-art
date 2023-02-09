@@ -2,9 +2,28 @@ import React, {useState, ChangeEvent, useEffect} from 'react'
 import {FiUpload} from 'react-icons/fi'
 import Link from 'next/link'
 import { postCommission } from '@/lib'
+import { getStatus } from '@/lib'
 
 type CommissionScope = "bust" | "half-body" | "full-body" | ""
 type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | ""
+
+type commissionProps = {
+    commission_open: boolean,
+    art_trade_open: boolean
+  }
+
+export async function getServerSideProps(){
+    const props = await getStatus()
+    return {props}
+}
+
+const OrderFormContainer = ({commission_open}: commissionProps) => {
+    return (
+        <div>
+            {commission_open?<OrderForm/>: <h2>Commissions not open yet</h2>}
+        </div>
+    )
+}
 
 const OrderForm = () => {
     const [name, setName] = useState<string>("")
@@ -48,71 +67,69 @@ const OrderForm = () => {
       }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='name'>Name:</label>
-                <input
-                    name='name'
-                    id='name'
-                    type={"text"}
-                    onChange={(e) => {setName(e.target.value)}}
-                    required
-                />
-                <label htmlFor='email'>Email:</label>
-                <input
-                    name='email'
-                    id='email'
-                    type={"email"}
-                    onChange={(e) => {setEmail(e.target.value)}}
-                    required
-                />
-                <label htmlFor='character-name'>Character Name:</label>
-                <input 
-                    name='character-name'
-                    id='character-name'
-                    type={"text"}
-                    value={characterName}
-                    onChange={(e) => {setCharacterName(e.target.value)}}
-                />
-                <label htmlFor='number-of-characters'>Number of characters:</label>
-                <input
-                    name="number-of-characters"
-                    id="number-of-characters"
-                    type={"number"}
-                    min={0}
-                    value={numberOfCharcters.toString()}
-                    onChange={(e) => {setNumberOfCharacters(parseInt(e.target.value))}}
-                />
-                <label htmlFor="scope">Select a scope:</label>
-                    <select id="scope" name="scope" onChange={(e) => {setCommissionScope(e.target.value)}}>
-                        <option value="bust">Bust</option>
-                        <option value="half-body">Half Body</option>
-                        <option value="full-body">Full Body</option>
-                    </select>
-                <label htmlFor="type">Select a type:</label>
-                    <select id="type" name="type" onChange={(e) => {setCommissionType(e.target.value)}}>
-                        <option value="sketch">Sketch</option>
-                        <option value="colored-sketch">Colored Sketch</option>
-                        <option value="full-render">Full Render</option>
-                        <option value="vtuber">Vtuber</option>
-                    </select>
-                <label htmlFor='additional-details'>Additional details (include links to any reference):</label>
-                <textarea name='additional-details' onChange={(e) => {setDetails(e.target.value)}}/>
-                <div className="file-upload">
-                    <label htmlFor="references" className='upload-label'><FiUpload/> Upload reference files</label>
-                    <input type="file" id="references" onChange={handleFileChange} name="references" multiple />
-                    {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
-                </div>
-                
-                <input name="agree" type={"checkbox"} onClick={handleCheck} required/>
-                <label htmlFor="agree">I have read and agreed to the <Link href="/terms-of-service"><span className="terms-link">terms of service</span></Link></label>
-                
+        <form onSubmit={handleSubmit}>
+            <label htmlFor='name'>Name:</label>
+            <input
+                name='name'
+                id='name'
+                type={"text"}
+                onChange={(e) => {setName(e.target.value)}}
+                required
+            />
+            <label htmlFor='email'>Email:</label>
+            <input
+                name='email'
+                id='email'
+                type={"email"}
+                onChange={(e) => {setEmail(e.target.value)}}
+                required
+            />
+            <label htmlFor='character-name'>Character Name:</label>
+            <input 
+                name='character-name'
+                id='character-name'
+                type={"text"}
+                value={characterName}
+                onChange={(e) => {setCharacterName(e.target.value)}}
+            />
+            <label htmlFor='number-of-characters'>Number of characters:</label>
+            <input
+                name="number-of-characters"
+                id="number-of-characters"
+                type={"number"}
+                min={0}
+                value={numberOfCharcters.toString()}
+                onChange={(e) => {setNumberOfCharacters(parseInt(e.target.value))}}
+            />
+            <label htmlFor="scope">Select a scope:</label>
+                <select id="scope" name="scope" onChange={(e) => {setCommissionScope(e.target.value)}}>
+                    <option value="bust">Bust</option>
+                    <option value="half-body">Half Body</option>
+                    <option value="full-body">Full Body</option>
+                </select>
+            <label htmlFor="type">Select a type:</label>
+                <select id="type" name="type" onChange={(e) => {setCommissionType(e.target.value)}}>
+                    <option value="sketch">Sketch</option>
+                    <option value="colored-sketch">Colored Sketch</option>
+                    <option value="full-render">Full Render</option>
+                    <option value="vtuber">Vtuber</option>
+                </select>
+            <label htmlFor='additional-details'>Additional details (include links to any reference):</label>
+            <textarea name='additional-details' onChange={(e) => {setDetails(e.target.value)}}/>
+            <div className="file-upload">
+                <label htmlFor="references" className='upload-label'><FiUpload/> Upload reference files</label>
+                <input type="file" id="references" onChange={handleFileChange} name="references" multiple />
+                {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
+            </div>
+            
+            <input name="agree" type={"checkbox"} onClick={handleCheck} required/>
+            <label htmlFor="agree">I have read and agreed to the <Link href="/terms-of-service"><span className="terms-link">terms of service</span></Link></label>
+            
 
-                <input type={"submit"} value="SUBMIT"/>
-                    
+            <input type={"submit"} value="SUBMIT"/>
                 
-            </form>
-        </div>
+            
+        </form>
     )
 }
 
@@ -130,10 +147,10 @@ function FileContainer({file, removeReference, index}: fileProps) {
         removeReference(index)
     }
     return (
-            <div className="file-container">{file.name}<span onClick={handleClick}>&times;</span></div>
+            <div className="file-container"><p>{file.name}</p><span onClick={handleClick}>&times;</span></div>
     )
     
 }
 
-export default OrderForm
+export default OrderFormContainer
 

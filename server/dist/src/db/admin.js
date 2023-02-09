@@ -12,34 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAdmin = exports.updateAdminPassword = exports.postAdmin = exports.getAdminByUsername = void 0;
+exports.deleteAdmin = exports.updateAdminPassword = exports.getAdminByUsername = void 0;
 const pool_1 = __importDefault(require("./pool"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-function getAdminByUsername(req, res, next) {
+function getAdminByUsername(username) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { username } = req.body;
         const adminUser = yield pool_1.default.query('SELECT * FROM users.admin WHERE username=$1', [username]);
         if (adminUser.rows.length > 0) {
-            req.admin = adminUser.rows[0];
-            next();
+            return adminUser.rows[0];
         }
         else {
-            res.status(404).send({ message: 'user not found' });
+            return null;
         }
     });
 }
 exports.getAdminByUsername = getAdminByUsername;
-function postAdmin(req, res) {
+function postAdmin(username, password) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { username, password } = req.body;
         const salt = yield bcrypt_1.default.genSalt(10);
-        const hashedPassword = bcrypt_1.default.hash(password, salt);
+        const hashedPassword = yield bcrypt_1.default.hash(password, salt);
         yield pool_1.default.query('INSERT INTO users.admin (username, password)\
          VALUES ($1, $2)', [username, hashedPassword]);
-        res.status(201).send({ message: 'user successfully created' });
     });
 }
-exports.postAdmin = postAdmin;
 function updateAdminPassword(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { username, password } = req.body;

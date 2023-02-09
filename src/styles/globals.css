@@ -132,9 +132,15 @@ span.navbar-menu-item:hover {
   justify-content: center;
   align-items: center;
   padding: 100px 40px;
-  background-color: #ff8787;
+  background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url('../../public/yae_miko_by_miiyachi_df7tfs0-fullview.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 100%;
+  
+  /* background-color: #ff8787;
+  background-image: url('../../public/yae_miko_by_miiyachi_df7tfs0-fullview.jpg'); */
   position: relative;
-  height: 400px;
+  height: 500px;
   line-height: 0.9; 
   width: 100%;
 }
@@ -170,7 +176,7 @@ span.navbar-menu-item:hover {
   margin-top: 4px;
   color: white;
 }
-.hero-banner-container h1{
+h1{
   color: white;
   font-size: 10em;
   margin-left: -20px;
@@ -183,6 +189,21 @@ span.navbar-menu-item:hover {
   width: 300px;
   height: 300px;
 }
+
+@media only screen and (max-width: 760px) {
+  .hero-banner-container h1 {
+    font-size: 6em;
+  }
+  #hero-banner-button{
+    display:none;
+  }
+
+  .hero-banner-container{
+    height: 250px;
+    min-width: 450px;
+  }
+}
+
 .products-heading{
 
   margin: 40px 0px;
@@ -279,7 +300,8 @@ padding: 20px 10px;
 
 h2 {
   margin: 30px 0 10px 0;
-  text-transform: uppercase
+  text-transform: uppercase;
+  color: white;
 }
 
 h4 {
@@ -563,4 +585,19 @@ input[type=submit]:hover {
 .terms-link:hover{
   text-decoration: underline;
   color: #f02d34
+}
+
+.file-container{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.file-container span{
+  display: block;
+  margin-left: 5px;
+}
+
+.file-container>span:hover{
+  opacity: 0.5;
+  cursor: pointer;
 }

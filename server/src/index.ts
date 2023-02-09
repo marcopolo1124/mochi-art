@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import site_state from './routes/site_state';
 import images from './routes/images';
+import admin from './routes/admin'
 import commissions from './routes/comissions'
 import dotenv from 'dotenv';
 import cors from 'cors'
@@ -19,6 +20,7 @@ app.use(cors({
 app.use('/state', site_state)
 app.use('/images', images)
 app.use('/commissions', commissions)
+app.use('/admin', admin)
 
 
 app.set("view_engine", "ejs")

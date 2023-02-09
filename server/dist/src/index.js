@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const site_state_1 = __importDefault(require("./routes/site_state"));
 const images_1 = __importDefault(require("./routes/images"));
+const admin_1 = __importDefault(require("./routes/admin"));
 const comissions_1 = __importDefault(require("./routes/comissions"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
@@ -22,6 +23,7 @@ app.use((0, cors_1.default)({
 app.use('/state', site_state_1.default);
 app.use('/images', images_1.default);
 app.use('/commissions', comissions_1.default);
+app.use('/admin', admin_1.default);
 app.set("view_engine", "ejs");
 app.get('/', (req, res) => {
     res.send({ message: 'Server is up' });
