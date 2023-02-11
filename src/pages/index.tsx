@@ -14,7 +14,7 @@ const Home = ({featured, gallery}: homeProps) => {
         <HeroBanner/>
         <main className='main-container'>
         <Featured images={featured.images}/>
-        <Gallery images={gallery.images}/>
+        {/* <Gallery images={gallery.images}/> */}
         </main>
     </div>
   )

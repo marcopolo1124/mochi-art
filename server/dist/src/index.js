@@ -25,7 +25,9 @@ app.use('/images', images_1.default);
 app.use('/commissions', comissions_1.default);
 app.use('/admin', admin_1.default);
 const gallery = process.env.GALLERY_PATH ? process.env.GALLERY_PATH : "../gallery_images";
-app.use('/static', express_1.default.static(gallery));
+const commission = process.env.COMMISSION_PATH ? process.env.COMMISSION_PATH : "../commission_images";
+app.use('/static-gallery', express_1.default.static(gallery));
+app.use('/static-commission', express_1.default.static(commission));
 app.set("view_engine", "ejs");
 app.get('/', (req, res) => {
     res.send({ message: 'Server is up' });

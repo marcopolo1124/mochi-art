@@ -22,7 +22,9 @@ app.use('/images', images)
 app.use('/commissions', commissions)
 app.use('/admin', admin)
 const gallery = process.env.GALLERY_PATH?process.env.GALLERY_PATH: "../gallery_images"
-app.use('/static', express.static(gallery))
+const commission = process.env.COMMISSION_PATH?process.env.COMMISSION_PATH: "../commission_images"
+app.use('/static-gallery', express.static(gallery))
+app.use('/static-commission', express.static(commission))
 
 
 app.set("view_engine", "ejs")

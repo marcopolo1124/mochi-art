@@ -55,7 +55,7 @@ function ImageContainer({image}: ImageProp){
                 <Image
                     alt={title}
                     className="main-image"
-                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/static/${file_name}`}
+                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/static-gallery/${file_name}`}
                     height={500}
                     width={1400}
                 />
