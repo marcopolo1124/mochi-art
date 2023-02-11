@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getImage } from '@/lib'
-import { Image } from '@/types'
+import { Image as ImageType } from '@/types'
+import Image from 'next/image'
 
 const ImageDetail = () => {
   
   const router = useRouter()
   const {fileName} = router.query
 
-  const [imageDetail, setImageDetail] = useState<Image>({
+  const [imageDetail, setImageDetail] = useState<ImageType>({
     title: "",
     file_name: "",
     image_description: "",
@@ -41,7 +42,7 @@ const ImageDetail = () => {
   )
 }
 
-type ImageProp = {image: Image}
+type ImageProp = {image: ImageType}
 
 function ImageContainer({image}: ImageProp){
     const {file_name, image_description, title, date_posted} = image
@@ -51,7 +52,13 @@ function ImageContainer({image}: ImageProp){
     return (
         <div>
             <div className="image-container">
-                <img className="main-image" src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}/${file_name}`} />
+                <Image
+                    alt={title}
+                    className="main-image"
+                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/static/${file_name}`}
+                    height={500}
+                    width={1400}
+                />
             </div>
             
             <div className="image-detail-container">

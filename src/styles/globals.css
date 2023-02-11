@@ -388,6 +388,11 @@ hr{
   justify-content: center;
 }
 
+.image-container>img{
+  max-height: 500px;
+  object-fit: contain;
+}
+
 .image-detail-container{
   margin: 0 200px;
 }

@@ -21,6 +21,8 @@ app.use('/state', site_state)
 app.use('/images', images)
 app.use('/commissions', commissions)
 app.use('/admin', admin)
+const gallery = process.env.GALLERY_PATH?process.env.GALLERY_PATH: "../gallery_images"
+app.use('/static', express.static(gallery))
 
 
 app.set("view_engine", "ejs")

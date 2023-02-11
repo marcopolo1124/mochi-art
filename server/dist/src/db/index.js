@@ -5,7 +5,6 @@ const site_1 = require("./site");
 const commissions_1 = require("./commissions");
 exports.default = {
     getAdminByUsername: admin_1.getAdminByUsername,
-    postAdmin: admin_1.postAdmin,
     updateAdminPassword: admin_1.updateAdminPassword,
     deleteAdmin: admin_1.deleteAdmin,
     getState: site_1.getState,
