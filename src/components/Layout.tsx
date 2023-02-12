@@ -17,10 +17,7 @@ const Layout = (props: LayoutProps) => {
       <Head>
         <title>Miiyachi art store</title>
       </Head>
-        {/* <main className='main-container'> */}
-          {children}
-        {/* </main> */}
-
+      {children}
       <footer>
         <Footer/>
       </footer>

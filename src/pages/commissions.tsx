@@ -26,15 +26,7 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
         })
     }, [])
   
-    const handleCommissionClick = () => {
-      setCommissionStatus(prev => !prev)
-      toggleCommissionStatus()
-    }
-  
-    const handleArtTradeClick = () => {
-      setArtTradeStatus(prev => !prev)
-      toggleArtTradeStatus()
-    }
+
 
 
   return (
@@ -45,8 +37,8 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
             <div className="title-container" id="commissions-title">
                 <h2>Commissions</h2>
                 <p id="commission-status">Commission status: {commissionStatus?
-                  <strong id="open" onClick={handleCommissionClick}>Open</strong>: 
-                  <strong id="closed" onClick={handleCommissionClick}>Closed</strong>}
+                  <strong id="open">Open</strong>: 
+                  <strong id="closed">Closed</strong>}
                 </p>
                 <Link href="/terms-of-service"><h3>MAKE SURE TO CLICK HERE AND READ THROUGH MY TERMS OF SERVICE BEFORE ORDERING!</h3></Link>
             </div>

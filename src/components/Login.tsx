@@ -1,10 +1,21 @@
 import React, {useState} from 'react'
+import { loginUser } from '@/lib'
 
-const Login = () => {
+const Login = ({setAuth}: {setAuth: any}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const status = await loginUser({username, password})
+        if (status === 400){
+            console.log("failed")
+            return
+        }
+        setAuth()
+    }
     return (
-        <form id="login-form" action="">
+        <div className='layout'>
+        <form id="login-form" onSubmit={handleSubmit}>
             <h2>Admin Login</h2>
             <label htmlFor='username'>Username:</label>
             <input
@@ -24,6 +35,7 @@ const Login = () => {
             />
             <input type={"submit"} value="LOGIN"/>
         </form>
+        </div>
     )
 }
 

@@ -1,41 +1,45 @@
 import db from '../db'
-import initialize from './passport-config'
-import passport from 'passport'
+
 import express from 'express'
-import session from 'express-session'
+import { PassportStatic } from 'passport'
 
-initialize(passport)
-const admin = express.Router()
-const secret = process.env.SESSION_SECRET
-admin.use(session({
-    secret: secret?secret: 'secret',
-    resave: false,
-    saveUninitialized: false,
-}))
-admin.use(passport.initialize())
-admin.use(passport.session())
-
-admin.get('/', (req, res)=> {
-    res.send({user: req.user, message:'test'})
-})
-
-admin.post(
-    '/login',
-    (req, res, next) => {
-        passport.authenticate(
-            'local', (err, user) => {
-                console.log(user)
-                if (err) res.status(500).send({message: 'Server error'})
-                if (!user) res.status(404).send({message: 'User not found'})
-                else {
-                    req.login(user, err => {
-                        if (err) res.status(500).send({message: 'Server error', error: JSON.stringify(err)})
-                        res.send({message: 'Successfully Authenticated'})
-                    })
+export default function Admin(passport: PassportStatic){
+    const admin = express.Router()
+    admin.get('/user', (req, res)=> {
+        res.send({user: req.user, message:'test'})
+    })
+    
+    admin.get('/', (req, res) =>{
+        res.render('login.ejs')
+    })
+    
+    admin.post(
+        '/login',
+        (req, res, next) => {
+            passport.authenticate(
+                'local', (err, user) => {
+                    console.log(user)
+                    if (err) res.status(500).send({message: 'Server error'})
+                    if (!user) res.status(404).send({message: 'User not found'})
+                    else {
+                        req.login(user, err => {
+                            if (err) res.status(500).send({message: 'Server error', error: JSON.stringify(err)})
+                            res.send({message: 'Successfully Authenticated'})
+                        })
+                    }
                 }
+            )(req, res, next)
+        }
+    )
+    admin.delete('/logout', (req, res) => {
+        req.logOut((err) => {
+            if (err){
+                res.status(500).send({message: "Failed to logout", err})
+                return
             }
-        )(req, res, next)
-    }
-)
-
-export default admin
+            res.status(204).send({message: "Successfully logged out"})
+        })
+        
+    })
+    return admin
+}

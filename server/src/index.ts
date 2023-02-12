@@ -1,15 +1,27 @@
 import express, { Express, Request, Response } from 'express';
 import site_state from './routes/site_state';
 import images from './routes/images';
-import admin from './routes/admin'
+import Admin from './routes/admin'
 import commissions from './routes/comissions'
 import dotenv from 'dotenv';
 import cors from 'cors'
-
+import passport = require('passport');
+import session from 'express-session'
+import initialize from './routes/passport-config'
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+initialize(passport)
+
+const secret = process.env.SESSION_SECRET
+app.use(session({
+    secret: secret?secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.json())
 app.use(express.urlencoded( {extended: false} ))
 app.use(cors({
@@ -20,7 +32,7 @@ app.use(cors({
 app.use('/state', site_state)
 app.use('/images', images)
 app.use('/commissions', commissions)
-app.use('/admin', admin)
+app.use('/admin', Admin(passport))
 const gallery = process.env.GALLERY_PATH?process.env.GALLERY_PATH: "../gallery_images"
 const commission = process.env.COMMISSION_PATH?process.env.COMMISSION_PATH: "../commission_images"
 app.use('/static-gallery', express.static(gallery))

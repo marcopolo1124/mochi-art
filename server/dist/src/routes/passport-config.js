@@ -37,8 +37,11 @@ function initialize(passport) {
             }
         });
         passport.use(new LocalStrategy({ usernameField: 'username' }, authenticateUser));
-        passport.serializeUser((user, done) => done(null, user));
-        passport.deserializeUser((username, done) => done(null, (0, admin_1.getAdminByUsername)(username)));
+        passport.serializeUser((user, done) => { done(null, user.username); });
+        passport.deserializeUser((username, done) => __awaiter(this, void 0, void 0, function* () {
+            const user = yield (0, admin_1.getAdminByUsername)(username);
+            done(null, { username: user.username });
+        }));
     });
 }
 exports.default = initialize;

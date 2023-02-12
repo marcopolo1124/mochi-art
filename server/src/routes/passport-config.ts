@@ -26,8 +26,10 @@ async function initialize(passport: PassportStatic) {
             {usernameField: 'username'},
             authenticateUser)
     )
-    passport.serializeUser((user, done) => done(null, user))
-    passport.deserializeUser((username: string, done) => done(null, getAdminByUsername(username)))   
+    passport.serializeUser((user: any, done) => {done(null, user.username)})
+    passport.deserializeUser(async (username: string, done) => {
+        const user = await getAdminByUsername(username)
+        done(null, {username: user.username})})   
 }
 
 export default initialize

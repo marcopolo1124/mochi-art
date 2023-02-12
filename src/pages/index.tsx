@@ -13,13 +13,13 @@ const Home = ({featured, gallery}: homeProps) => {
     <>
     <Navbar/>
     <div className="layout">
-    <div className="home">
-        <HeroBanner/>
-        <main className='main-container'>
-        <Featured images={featured.images}/>
-        {/* <Gallery images={gallery.images}/> */}
-        </main>
-    </div>
+      <div className="home">
+          <HeroBanner/>
+          <main className='main-container'>
+          <Featured images={gallery.images}/>
+          {/* <Gallery images={gallery.images}/> */}
+          </main>
+      </div>
     </div>
 
     </>

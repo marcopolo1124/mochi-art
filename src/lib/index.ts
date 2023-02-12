@@ -146,7 +146,7 @@ export async function loginUser({username, password}: {username:string, password
     const loginRequest = await postRequest(
         {
             url: ServerUrl,
-            route:'/login',
+            route:'/admin/login',
             body: {username, password}
         }
     )
@@ -160,5 +160,32 @@ export async function loginUser({username, password}: {username:string, password
         return 200
     } else {
         throw new Error(`status: ${loginRequest.status}`)
+    }
+}
+
+export async function getUser(){
+    const userRequest = await getRequest({url: ServerUrl, route: "/admin/user"})
+    if (userRequest.ok){
+        return await userRequest.json()
+    } else {
+        throw new Error(`status ${userRequest.status}`)
+    }
+}
+
+export async function logout(){
+    const logoutRequest = await fetch(
+        `${ServerUrl}/admin/logout`,
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        }
+    )
+    if (logoutRequest.ok){
+        return {message: 'ok'}
+    } else{
+        throw new Error(`status: ${logoutRequest.status}`)
     }
 }
