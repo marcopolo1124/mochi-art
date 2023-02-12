@@ -10,12 +10,11 @@ const GalleryImage = ({title, file_name}: ImageType) => {
         <Image 
           src={src}
           className="product-image"
-          height={200}
+          height={300}
           width={300}
           alt={title}
         />
       </Link>
-
     </div>
   )
 }
