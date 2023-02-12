@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { getStatus, toggleArtTradeStatus, toggleCommissionStatus } from '@/lib'
+import { getStatus } from '@/lib'
 import Link from 'next/link'
 import { Navbar } from '@/components'
 
