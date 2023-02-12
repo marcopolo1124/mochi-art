@@ -1,7 +1,11 @@
+import { Navbar } from '@/components'
 import React from 'react'
 
 const termsOfService = () => {
   return (
+    <>
+    <Navbar/>
+    <div className='layout'>
     <main className="article-container">
       <div className="article-div title-container">
         <h2>Terms of Service</h2>
@@ -68,6 +72,8 @@ const termsOfService = () => {
         </div>
       </div>
     </main>
+    </div>
+    </>
       
   )
 }

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { getStatus, toggleArtTradeStatus, toggleCommissionStatus } from '@/lib'
 import Link from 'next/link'
+import { Navbar } from '@/components'
 
 
 export async function getServerSideProps(){
@@ -37,7 +38,9 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
 
 
   return (
-    <div>
+    <>
+    <Navbar/>
+    <div className="layout">
         <main className="article-container">
             <div className="title-container" id="commissions-title">
                 <h2>Commissions</h2>
@@ -99,6 +102,7 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
         </main>
         
     </div>
+    </>
   )
 }
 

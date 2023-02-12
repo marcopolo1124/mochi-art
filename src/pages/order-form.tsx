@@ -3,6 +3,7 @@ import {FiUpload} from 'react-icons/fi'
 import Link from 'next/link'
 import { postCommission } from '@/lib'
 import { getStatus } from '@/lib'
+import { Navbar } from '@/components'
 
 type CommissionScope = "bust" | "half-body" | "full-body" | ""
 type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | ""
@@ -67,6 +68,9 @@ const OrderForm = () => {
       }
 
     return (
+        <>
+        <Navbar/>
+        <div className='layout'>
         <form onSubmit={handleSubmit}>
             <label htmlFor='name'>Name:</label>
             <input
@@ -130,6 +134,8 @@ const OrderForm = () => {
                 
             
         </form>
+        </div>
+        </>
     )
 }
 

@@ -17,13 +17,10 @@ const Layout = (props: LayoutProps) => {
       <Head>
         <title>Miiyachi art store</title>
       </Head>
-      <Navbar/>
-      <div className='layout'>
         {/* <main className='main-container'> */}
           {children}
         {/* </main> */}
-        
-      </div>
+
       <footer>
         <Footer/>
       </footer>

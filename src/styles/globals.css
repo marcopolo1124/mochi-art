@@ -520,7 +520,7 @@ form {
   justify-content: flex-start;
 } */
 
-input[type=text], input[type=email], input[type=number], select, textarea {
+input[type=text], input[type=email], input[type=number], input[type=password], select, textarea {
   width: 100%;
   padding: 6px 10px;
   margin: 8px 0;
@@ -606,4 +606,8 @@ input[type=submit]:hover {
 .file-container>span:hover{
   opacity: 0.5;
   cursor: pointer;
+}
+
+#login-form{
+  margin: 200px 0;
 }

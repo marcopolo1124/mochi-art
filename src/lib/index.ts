@@ -1,4 +1,4 @@
-const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL
+const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL ? process.env.NEXT_PUBLIC_SERVER_URL: ""
 
 if (!ServerUrl){
     throw new Error()
@@ -19,6 +19,20 @@ function getRequest({url, route}: RequestOptions){
                 'Content-Type': 'application/json'
             },
             credentials: 'include'
+        }
+    )
+}
+
+function postRequest({url, route, body}: RequestOptions){
+    return fetch(
+        `${url}${route}`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(body)
         }
     )
 }
@@ -122,4 +136,29 @@ export function postCommission(data: FormData){
             credentials: 'include'
         }
     ) 
+}
+
+export async function loginUser({username, password}: {username:string, password: string}){
+    if (!username || !password) {
+        console.log("missing credentials")
+        throw new Error('missing credentials')
+    }
+    const loginRequest = await postRequest(
+        {
+            url: ServerUrl,
+            route:'/login',
+            body: {username, password}
+        }
+    )
+    if (loginRequest.status === 404){
+        console.log("Incorrect username or password")
+        return 400
+    }
+    if (loginRequest.ok){
+        console.log('logged in')
+        console.log(await loginRequest.json())
+        return 200
+    } else {
+        throw new Error(`status: ${loginRequest.status}`)
+    }
 }
