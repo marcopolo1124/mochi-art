@@ -2,6 +2,7 @@ import db from '../db'
 import express from 'express'
 import multer from 'multer'
 import path from 'path'
+import crypto from 'crypto'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, process.env.GALLERY_PATH?process.env.GALLERY_PATH: "../gallery_images")

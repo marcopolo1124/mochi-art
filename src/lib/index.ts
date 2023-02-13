@@ -189,3 +189,14 @@ export async function logout(){
         throw new Error(`status: ${logoutRequest.status}`)
     }
 }
+
+export async function uploadImage(data: FormData){
+    fetch(
+        `${ServerUrl}/images/upload`,
+        {
+            method: 'POST',
+            body: data,
+            credentials: 'include'
+        }
+    ) 
+}
