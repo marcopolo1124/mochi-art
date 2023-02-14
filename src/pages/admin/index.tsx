@@ -6,8 +6,6 @@ import { toggleCommissionStatus, toggleArtTradeStatus } from '@/lib'
 const admin = ({commission_open, art_trade_open, init}: {commission_open: boolean, art_trade_open: boolean, init: boolean}) => {
     const [commissionState, setCommissionState] = useState<boolean>(commission_open)
     const [artTradeState, setArtTradeState] = useState<boolean>(art_trade_open)
-    console.log("init")
-    console.log(init)
 
     return (
         <RouteGuard>

@@ -18,8 +18,6 @@ const admin_1 = require("../db/admin");
 function initialize(passport) {
     return __awaiter(this, void 0, void 0, function* () {
         const authenticateUser = (username, password, done) => __awaiter(this, void 0, void 0, function* () {
-            console.log("Authenticating user");
-            console.log(username);
             const user = yield (0, admin_1.getAdminByUsername)(username);
             if (user === null) {
                 return done(null, false, { message: 'No user with that email' });

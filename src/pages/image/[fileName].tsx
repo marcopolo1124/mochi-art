@@ -19,14 +19,10 @@ const ImageDetail = () => {
 
   useEffect(() => {
     if (typeof(fileName) !== "string"){
-        console.log('error')
-        console.log(typeof(fileName))
         return
     }
     getImage(fileName)
         .then(({image}) => {
-            console.log('image')
-            console.log(image)
             setImageDetail(image)
         })
         .catch((error) => {
@@ -48,7 +44,6 @@ function ImageContainer({image}: ImageProp){
     const {file_name, image_description, title, date_posted} = image
     const dateString = new Date(date_posted).toLocaleDateString()
     const parseDetail = (string: String) => string.split('\n').map(line => <p>{line}</p>)
-    console.log(JSON.stringify(image_description))
     return (
         <div>
             <div className="image-container">

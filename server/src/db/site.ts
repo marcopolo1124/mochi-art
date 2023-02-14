@@ -44,7 +44,6 @@ export async function postImage(req: Request<RequestParams, ResponseBody, AddIma
     try{
         const fileName = req.fileName
         const {title, description, featured} = req.body
-        console.log(req.body)
         const featuredBool = featured? true: false
         const datePosted = new Date()
         await pool.query(
@@ -54,8 +53,7 @@ export async function postImage(req: Request<RequestParams, ResponseBody, AddIma
         )
         res.status(201).send({message: 'image added'})
     } catch (e){
-        console.log("Image upload unsuccessful")
-        console.log(e)
+
         next(e)
     }
 }
@@ -74,7 +72,6 @@ export async function getFeatured(req: Request, res: Response, next: NextFunctio
 export async function getGallery(req: Request<RequestParams, ResponseBody, RequestBody, PaginationQuery>, res: Response, next: NextFunction){
     try{
         const {perPage, orderBy, page}: Pagination = req.query
-        console.log(req.query)
         const rowCount = pool.query(
             'SELECT COUNT(*) FROM site.gallery_images'
         )
@@ -95,18 +92,14 @@ export async function getGallery(req: Request<RequestParams, ResponseBody, Reque
 export async function deleteImage(req: Request, res: Response, next: NextFunction){
     try{
         const {fileName} = req.query
-        console.log('delete')
-        console.log(req.query)
         await pool.query(
             'DELETE FROM site.gallery_images WHERE file_name=$1',
             [fileName]
         )
         fs.unlink(`${process.env.GALLERY_PATH}/${fileName}`, (err) => {
             if (err) {
-                console.log(err)
                 return
             }
-            console.log('success')
         })
         res.status(204).send({message: 'deleted'})
     } catch (err){

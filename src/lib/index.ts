@@ -142,7 +142,6 @@ export function postCommission(data: FormData){
 
 export async function loginUser({username, password}: {username:string, password: string}){
     if (!username || !password) {
-        console.log("missing credentials")
         throw new Error('missing credentials')
     }
     const loginRequest = await postRequest(
@@ -153,12 +152,9 @@ export async function loginUser({username, password}: {username:string, password
         }
     )
     if (loginRequest.status === 404){
-        console.log("Incorrect username or password")
         return 400
     }
     if (loginRequest.ok){
-        console.log('logged in')
-        console.log(await loginRequest.json())
         return 200
     } else {
         throw new Error(`status: ${loginRequest.status}`)
@@ -209,8 +205,6 @@ export async function deleteImages(images: Image[]){
         const body = {
             fileName: image.file_name
         }
-        console.log("deleting")
-        console.log(body)
         fetch(
             `${ServerUrl}/images/delete?fileName=${image.file_name}`,
             {

@@ -18,7 +18,6 @@ export default function Admin(passport: PassportStatic){
         (req, res, next) => {
             passport.authenticate(
                 'local', (err, user) => {
-                    console.log(user)
                     if (err) res.status(500).send({message: 'Server error'})
                     if (!user) res.status(404).send({message: 'User not found'})
                     else {

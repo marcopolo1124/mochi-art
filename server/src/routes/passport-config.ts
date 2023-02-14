@@ -5,8 +5,6 @@ import {PassportStatic} from 'passport'
 
 async function initialize(passport: PassportStatic) {
     const authenticateUser = async (username:string, password:string, done:Function) => {
-        console.log("Authenticating user")
-        console.log(username)
         const user = await getAdminByUsername(username)
         if (user === null) {
             return done(null, false, {message: 'No user with that email'})

@@ -14,7 +14,6 @@ function Admin(passport) {
     });
     admin.post('/login', (req, res, next) => {
         passport.authenticate('local', (err, user) => {
-            console.log(user);
             if (err)
                 res.status(500).send({ message: 'Server error' });
             if (!user)

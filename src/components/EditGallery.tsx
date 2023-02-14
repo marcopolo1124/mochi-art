@@ -60,14 +60,6 @@ function GalleryImage({image, handleSelect, handleDeSelect}: {image: ImageType, 
     const src = `${process.env.NEXT_PUBLIC_SERVER_URL}/static-gallery/${file_name}`
     const toggleSelect = handleSelect(image)
     const toggleDeSelect = handleDeSelect(image)
-    useEffect(()=>{
-      console.log(title)
-      console.log(clicked)
-    }, [clicked])
-    useEffect(()=>{
-      console.log(title)
-      console.log(clicked)
-    }, [])
     const handleClick = () => {
       if (clicked){
         setClicked(false)

@@ -36,9 +36,7 @@ const OrderForm = () => {
     const [details, setDetails] = useState<string>("")
     const [agreed, setAgreed] = useState<boolean>(false)
     const [references, setReferences] = useState<File[]>([]);
-    useEffect(() => {
-        console.log(references)
-    }, [references])
+
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         setReferences(prev => e.target.files? [...prev, ...(Array.from(e.target.files))]: [...prev]);
     };
@@ -126,7 +124,7 @@ const OrderForm = () => {
                 {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
             </div>
             
-            <input name="agree" type={"checkbox"} onClick={handleCheck} required/>
+            <input name="agree" type={"checkbox"} onClick={handleCheck} checked={agreed} required/>
             <label htmlFor="agree">I have read and agreed to the <Link href="/terms-of-service"><span className="terms-link">terms of service</span></Link></label>
             
 

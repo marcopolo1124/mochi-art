@@ -8,7 +8,6 @@ const Login = ({setAuth}: {setAuth: any}) => {
         event.preventDefault();
         const status = await loginUser({username, password})
         if (status === 400){
-            console.log("failed")
             return
         }
         setAuth()

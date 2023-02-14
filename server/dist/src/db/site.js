@@ -58,7 +58,6 @@ function postImage(req, res, next) {
         try {
             const fileName = req.fileName;
             const { title, description, featured } = req.body;
-            console.log(req.body);
             const featuredBool = featured ? true : false;
             const datePosted = new Date();
             yield pool_1.default.query('INSERT INTO site.gallery_images (file_name, title, image_description, date_posted, featured)\
@@ -66,8 +65,6 @@ function postImage(req, res, next) {
             res.status(201).send({ message: 'image added' });
         }
         catch (e) {
-            console.log("Image upload unsuccessful");
-            console.log(e);
             next(e);
         }
     });
@@ -89,7 +86,6 @@ function getGallery(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { perPage, orderBy, page } = req.query;
-            console.log(req.query);
             const rowCount = pool_1.default.query('SELECT COUNT(*) FROM site.gallery_images');
             const images = pool_1.default.query('SELECT * FROM site.gallery_images ORDER BY $1 OFFSET $2 LIMIT $3', [orderBy, perPage * (page - 1), perPage]);
             res.send({
@@ -107,15 +103,11 @@ function deleteImage(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { fileName } = req.query;
-            console.log('delete');
-            console.log(req.query);
             yield pool_1.default.query('DELETE FROM site.gallery_images WHERE file_name=$1', [fileName]);
             fs_1.default.unlink(`${process.env.GALLERY_PATH}/${fileName}`, (err) => {
                 if (err) {
-                    console.log(err);
                     return;
                 }
-                console.log('success');
             });
             res.status(204).send({ message: 'deleted' });
         }
