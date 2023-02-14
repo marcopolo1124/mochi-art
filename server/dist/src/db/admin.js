@@ -17,12 +17,17 @@ const pool_1 = __importDefault(require("./pool"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 function getAdminByUsername(username) {
     return __awaiter(this, void 0, void 0, function* () {
-        const adminUser = yield pool_1.default.query('SELECT * FROM users.admin WHERE username=$1', [username]);
-        if (adminUser.rows.length > 0) {
-            return adminUser.rows[0];
+        try {
+            const adminUser = yield pool_1.default.query('SELECT * FROM users.admin WHERE username=$1', [username]);
+            if (adminUser.rows.length > 0) {
+                return adminUser.rows[0];
+            }
+            else {
+                return null;
+            }
         }
-        else {
-            return null;
+        catch (err) {
+            console.log(err);
         }
     });
 }
@@ -35,7 +40,7 @@ function postAdmin(username, password) {
          VALUES ($1, $2)', [username, hashedPassword]);
     });
 }
-function updateAdminPassword(req, res) {
+function updateAdminPassword(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const { username, password } = req.body;
         const salt = yield bcrypt_1.default.genSalt(10);

@@ -3,15 +3,19 @@ import bcrypt from 'bcrypt';
 import {NextFunction, Request, Response} from 'express'
 
 export async function getAdminByUsername(username: string) {
-    const adminUser = await pool.query(
-        'SELECT * FROM users.admin WHERE username=$1'
-        , [username]
-    )
+    try {
+        const adminUser = await pool.query(
+            'SELECT * FROM users.admin WHERE username=$1'
+            , [username]
+        )
 
-    if (adminUser.rows.length > 0){
-        return adminUser.rows[0]
-    } else{
-        return null
+        if (adminUser.rows.length > 0){
+            return adminUser.rows[0]
+        } else{
+            return null
+        }
+    }catch (err){
+        console.log(err)
     }
 }
 
@@ -25,7 +29,7 @@ async function postAdmin(username: string, password: string){
     )
 }
 
-export async function updateAdminPassword(req: Request, res: Response){
+export async function updateAdminPassword(req: Request, res: Response, next: NextFunction){
     const {username, password} = req.body
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = bcrypt.hash(password, salt)

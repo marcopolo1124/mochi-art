@@ -15,55 +15,69 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.postCommission = exports.getCommission = exports.getCommissionsWithStatus = void 0;
 const pool_1 = __importDefault(require("./pool"));
 const crypto_1 = __importDefault(require("crypto"));
-function getCommissionsWithStatus(req, res) {
+function getCommissionsWithStatus(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        let commissions;
-        if (req.query.status) {
-            commissions = yield pool_1.default.query("SELECT * FROM commissions.commissions WHERE status=$1", [req.query.status]);
+        const { status, perPage, orderBy, page } = req.query;
+        const query = `SELECT * FROM commissions.commissions ${status ? "WHERE commission_status=$4" : ""} ORDER BY $1 OFFSET $2 LIMIT $3`;
+        const bindVarBase = [orderBy, perPage * (page - 1), perPage];
+        const bindVar = status ? [...bindVarBase, status] : bindVarBase;
+        try {
+            const rowCount = pool_1.default.query('SELECT COUNT(*) FROM commissions.commissions');
+            const commissions = yield pool_1.default.query(query, bindVar);
+            //
+            res.send({ commissions: commissions.rows, rowCount: (yield rowCount).rows[0].count });
         }
-        else {
-            commissions = yield pool_1.default.query("SELECT * FROM commissions.commissions");
+        catch (err) {
+            next(err);
         }
-        res.send({ pendingCommissions: commissions.rows });
     });
 }
 exports.getCommissionsWithStatus = getCommissionsWithStatus;
-function getCommission(req, res) {
+function getCommission(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const { id } = req.query;
-        const images = pool_1.default.query('SELECT * FROM commissions.commission_images WHERE commission_id=$1', [id]);
-        const commission = yield pool_1.default.query('SELECT * FROM commissions.commission WHERE id=$1', [id]);
-        if (commission.rows.length > 0) {
-            res.send({
-                commission,
-                images: (yield images).rows
-            });
+        try {
+            const images = pool_1.default.query('SELECT * FROM commissions.commission_images WHERE commission_id=$1', [id]);
+            const commission = yield pool_1.default.query('SELECT * FROM commissions.commission WHERE id=$1', [id]);
+            if (commission.rows.length > 0) {
+                res.send({
+                    commission,
+                    images: (yield images).rows
+                });
+            }
+            else {
+                res.status(404).send({
+                    commission: null,
+                    images: []
+                });
+            }
         }
-        else {
-            res.status(404).send({
-                commission: null,
-                images: []
-            });
+        catch (err) {
+            next(err);
         }
     });
 }
 exports.getCommission = getCommission;
-function postCommission(req, res) {
+function postCommission(req, res, next) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const images = req.files;
-        console.log(images);
-        console.log(req.body);
-        const { name, email, characterName, numberOfCharacters, scope, comType, details } = req.body;
-        const id = crypto_1.default.randomUUID();
-        yield pool_1.default.query("INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
-        // const promises = []
-        images.references.forEach((reference) => {
-            pool_1.default.query("INSERT INTO commissions.commission_images (commission_id, file_name)\
-             VALUES ($1, $2)", [id, reference.filename]);
-        });
-        // await Promise.all(promises)
-        res.status(201).send({ message: 'commission pending' });
+        try {
+            const { name, email, characterName, numberOfCharacters, scope, comType, details } = req.body;
+            const id = crypto_1.default.randomUUID();
+            yield pool_1.default.query("INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [id, name, email, characterName, numberOfCharacters, scope, comType, details]);
+            // const promises = []
+            (_a = images.references) === null || _a === void 0 ? void 0 : _a.forEach((reference) => {
+                pool_1.default.query("INSERT INTO commissions.commission_images (commission_id, file_name)\
+                 VALUES ($1, $2)", [id, reference.filename]);
+            });
+            // await Promise.all(promises)
+            res.status(201).send({ message: 'commission pending' });
+        }
+        catch (err) {
+            next(err);
+        }
     });
 }
 exports.postCommission = postCommission;

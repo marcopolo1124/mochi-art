@@ -708,3 +708,8 @@ label {
   cursor: pointer;
   color: grey;
 }
+
+#com-status{
+  width: 100px;
+  margin-left: 5px;
+}

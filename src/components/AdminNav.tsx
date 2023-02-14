@@ -8,6 +8,7 @@ const AdminNav = ({handleLogout}: {handleLogout: ()=>void}) => {
         <div className='navbar-menu' id="admin-nav-menu">
             <Link href="/admin"><span className='admin-menu-item'>Site Settings</span></Link>
             <Link href="/admin/gallery"><span className='admin-menu-item'>Gallery Settings</span></Link>
+            <Link href="/admin/commissions"><span className='admin-menu-item'>Commissions</span></Link>
             <div><span className='admin-menu-item' onClick={handleLogout}>Logout</span></div>
             
         </div>

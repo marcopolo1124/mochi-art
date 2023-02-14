@@ -11,6 +11,9 @@ export interface RequestQuery {}
 
 export interface StatusQuery {
   status?: Status;
+  perPage: number;
+  page: number;
+  orderBy: string
 }
 
 export interface IdQuery {
