@@ -1,10 +1,17 @@
 import { getFeatured, getImages } from '@/lib'
+import { GalleryImageForm } from '@/components'
+import { Image } from '@/types'
 import React from 'react'
+import {RouteGuard} from '@/components'
 
 
-const gallery = () => {
-  return (
-    <div>gallery</div>
+const gallery = ({gallery}: {gallery: {images: Image[]}}) => {
+    return (
+        <RouteGuard>
+            <>
+                <GalleryImageForm/>
+            </>
+        </RouteGuard>
   )
 }
 

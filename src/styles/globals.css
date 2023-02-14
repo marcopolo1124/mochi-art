@@ -641,3 +641,7 @@ label {
   border-bottom: 2px solid #ff8787;
 
 }
+
+#admin-nav-menu {
+  width:500px;
+}
