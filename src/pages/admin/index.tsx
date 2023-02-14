@@ -3,13 +3,14 @@ import { getStatus, getUser, logout, uploadImage } from '@/lib'
 import React, {useState, useEffect} from 'react'
 import { toggleCommissionStatus, toggleArtTradeStatus } from '@/lib'
 
-const admin = ({commission_open, art_trade_open}: {commission_open: boolean, art_trade_open: boolean}) => {
+const admin = ({commission_open, art_trade_open, init}: {commission_open: boolean, art_trade_open: boolean, init: boolean}) => {
     const [commissionState, setCommissionState] = useState<boolean>(commission_open)
     const [artTradeState, setArtTradeState] = useState<boolean>(art_trade_open)
-
+    console.log("init")
+    console.log(init)
 
     return (
-        <RouteGuard>
+        <RouteGuard init={init}>
             <>
                 <div className="admin-layout">
                     <div className='admin-container'>
@@ -47,8 +48,10 @@ const admin = ({commission_open, art_trade_open}: {commission_open: boolean, art
 export default admin
 
 export async function getServerSideProps(){
-    const props = await getStatus()
-    return {props}
+    const status = await getStatus()
+    const userReq = await getUser()
+    const init = userReq.user? true: false
+    return {props: {...status, init: init}}
   }
 
 

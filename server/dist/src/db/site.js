@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getImage = exports.deleteImage = exports.getGallery = exports.getFeatured = exports.postImage = exports.toggleArtTradeState = exports.toggleCommissionState = exports.getState = void 0;
 const pool_1 = __importDefault(require("./pool"));
+const fs_1 = __importDefault(require("fs"));
 function getState(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const state = yield pool_1.default.query('SELECT commission_open, art_trade_open FROM site.state');
@@ -79,8 +80,17 @@ function getGallery(req, res) {
 exports.getGallery = getGallery;
 function deleteImage(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { fileName } = req.body;
+        const { fileName } = req.query;
+        console.log('delete');
+        console.log(req.query);
         yield pool_1.default.query('DELETE FROM site.gallery_images WHERE file_name=$1', [fileName]);
+        fs_1.default.unlink(`${process.env.GALLERY_PATH}/${fileName}`, (err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log('success');
+        });
         res.status(204).send({ message: 'deleted' });
     });
 }

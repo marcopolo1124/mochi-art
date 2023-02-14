@@ -1,3 +1,5 @@
+import { Image } from "@/types"
+
 const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL ? process.env.NEXT_PUBLIC_SERVER_URL: ""
 
 if (!ServerUrl){
@@ -199,4 +201,30 @@ export async function uploadImage(data: FormData){
             credentials: 'include'
         }
     ) 
+}
+
+export async function deleteImages(images: Image[]){
+    let success: string[] = []
+    images.forEach((image) => {
+        const body = {
+            fileName: image.file_name
+        }
+        console.log("deleting")
+        console.log(body)
+        fetch(
+            `${ServerUrl}/images/delete?fileName=${image.file_name}`,
+            {
+                method: 'DELETE',
+                credentials: 'include'
+            }
+        
+        ).then(
+            async (value) => {
+                if (value.ok){
+                    success.push(image.file_name)
+                }
+            }
+        )   
+    })
+    return {message: `Deleted ${success}`}
 }

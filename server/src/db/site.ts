@@ -3,6 +3,7 @@ import { Response, Request, NextFunction } from 'express'
 import { Pagination } from '../../types/custom'
 import { RequestParams, ResponseBody,
         RequestBody, RequestQuery, AddImageBody, PaginationQuery} from "./interfaces";
+import fs from 'fs'
 
 export async function getState(req: Request, res: Response, next: NextFunction){
     const state = await pool.query(
@@ -72,11 +73,20 @@ export async function getGallery(req: Request<RequestParams, ResponseBody, Reque
 }
 
 export async function deleteImage(req: Request, res: Response){
-    const {fileName} = req.body
+    const {fileName} = req.query
+    console.log('delete')
+    console.log(req.query)
     await pool.query(
         'DELETE FROM site.gallery_images WHERE file_name=$1',
         [fileName]
     )
+    fs.unlink(`${process.env.GALLERY_PATH}/${fileName}`, (err) => {
+        if (err) {
+            console.log(err)
+            return
+        }
+        console.log('success')
+    })
     res.status(204).send({message: 'deleted'})
 }
 
