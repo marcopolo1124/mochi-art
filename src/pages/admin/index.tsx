@@ -10,37 +10,35 @@ const admin = ({commission_open, art_trade_open, init}: {commission_open: boolea
     console.log(init)
 
     return (
-        <RouteGuard init={init}>
-            <>
-                <div className="admin-layout">
-                    <div className='admin-container'>
-                        <div className='admin-section' id="commission-state">
-                            <h2>Set commission state</h2>
-                            <input
-                                type="checkbox"
-                                checked={commissionState}
-                                onChange={() => {
-                                    toggleCommissionStatus();
-                                    setCommissionState(prev => !prev)
-                                }}
-                            />
-                            <label>Commission open</label>
-                        </div>
-                        <div className="admin-section" id="commission-state">
-                            <h2>Set art trade state</h2>
-                            <input
-                                type="checkbox"
-                                checked={artTradeState}
-                                onChange={() => {
-                                    toggleArtTradeStatus();
-                                    setArtTradeState(prev => !prev)
-                                }}
-                            />
-                            <label>Art trade open</label>
-                        </div>
+        <RouteGuard>
+            <div className="admin-layout">
+                <div className='admin-container'>
+                    <div className='admin-section' id="commission-state">
+                        <h2>Set commission state</h2>
+                        <input
+                            type="checkbox"
+                            checked={commissionState}
+                            onChange={() => {
+                                toggleCommissionStatus();
+                                setCommissionState(prev => !prev)
+                            }}
+                        />
+                        <label>Commission open</label>
+                    </div>
+                    <div className="admin-section" id="commission-state">
+                        <h2>Set art trade state</h2>
+                        <input
+                            type="checkbox"
+                            checked={artTradeState}
+                            onChange={() => {
+                                toggleArtTradeStatus();
+                                setArtTradeState(prev => !prev)
+                            }}
+                        />
+                        <label>Art trade open</label>
                     </div>
                 </div>
-            </>
+            </div>
         </RouteGuard>
     )
 }

@@ -7,7 +7,7 @@ import {RouteGuard} from '@/components'
 
 const gallery = ({gallery, init}: {gallery: {images: Image[]}, init: boolean}) => {
     return (
-        <RouteGuard init={init}>
+        <RouteGuard>
             <div className="layout">
                 <div className='home'>
                     {/* <GalleryImageForm/> */}

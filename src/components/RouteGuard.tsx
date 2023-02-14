@@ -4,8 +4,8 @@ import Login from './Login'
 import AdminNav from './AdminNav'
 import { logout } from '@/lib'
 
-const RouteGuard = ({init, children}: {init: boolean, children: JSX.Element}) => {
-    const [auth, setAuth] = useState<boolean>(init)
+const RouteGuard = ({children}: {children: JSX.Element}) => {
+    const [auth, setAuth] = useState<boolean>(false)
     const setAuthToTrue = () =>{
         setAuth(true)
     }
