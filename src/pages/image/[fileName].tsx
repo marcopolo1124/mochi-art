@@ -30,7 +30,7 @@ const ImageDetail = () => {
         })
   }, [fileName])
   return (
-    <div>
+    <div className="layout">
         <main className="image-page-container">
             {imageDetail.file_name? <ImageContainer image={imageDetail}/>: <h2>404</h2>}
         </main>   
