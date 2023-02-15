@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react'
-import { useRouter } from 'next/router'
+import React, {useState} from 'react'
 import { getCommission } from '@/lib'
 import { CommissionType } from '@/types'
 import {GetServerSidePropsContext} from 'next'
@@ -7,9 +6,7 @@ import Image from 'next/image'
 import { RouteGuard } from '@/components'
 
 const Commission = ({commission, images}: {commission: CommissionType, images: any}) => {
-  const {id, character_name, scope, com_type, details, name, email, date_of_purchase, commission_status} = commission
-  const router = useRouter()
-  const {comId} = router.query
+  const {character_name, scope, com_type, details, name, email, date_of_purchase, commission_status} = commission
   const [viewStatus, setViewStatus] = useState(commission_status) 
   
   return (

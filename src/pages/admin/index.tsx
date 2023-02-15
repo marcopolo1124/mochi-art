@@ -1,6 +1,6 @@
-import { AdminNav, RouteGuard } from '@/components'
-import { getStatus, getUser, logout, uploadImage } from '@/lib'
-import React, {useState, useEffect} from 'react'
+import { RouteGuard } from '@/components'
+import { getStatus, getUser } from '@/lib'
+import React, {useState} from 'react'
 import { toggleCommissionStatus, toggleArtTradeStatus } from '@/lib'
 
 const admin = ({commission_open, art_trade_open, init}: {commission_open: boolean, art_trade_open: boolean, init: boolean}) => {

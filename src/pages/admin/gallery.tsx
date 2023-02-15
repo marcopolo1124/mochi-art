@@ -5,7 +5,7 @@ import React, {useEffect} from 'react'
 import {RouteGuard} from '@/components'
 
 
-const gallery = ({gallery, init}: {gallery: {images: Image[]}, init: boolean}) => {
+const gallery = ({gallery}: {gallery: {images: Image[]}}) => {
     return (
         <RouteGuard>
             <div className="layout">
