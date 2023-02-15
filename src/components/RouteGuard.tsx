@@ -21,7 +21,7 @@ const RouteGuard = ({children}: {children: JSX.Element}) => {
     
     return (
         <>
-            <AdminNav handleLogout={() => {logout().then(() => setAuth(false))}}/>
+            {auth && <AdminNav handleLogout={() => {logout().then(() => setAuth(false))}}/>}
             {auth? children: <Login setAuth={setAuthToTrue}/>}
         </>
     )

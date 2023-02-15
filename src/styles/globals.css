@@ -464,6 +464,7 @@ a>h3:hover{
 
 table{
   border-collapse:collapse;
+  color: white;
 }
 
 thead > tr > th {
@@ -712,4 +713,29 @@ label {
 #com-status{
   width: 100px;
   margin-left: 5px;
+}
+
+.table-link{
+  display: block;
+  padding: 10px;
+  height: 70px;
+}
+
+.tr-link:hover{
+  background-color: #1f1f1f;
+}
+
+td.com {
+  padding: 0
+}
+
+.page-count{
+  position: relative;
+  left: 45%;
+  color: white;
+}
+
+.page-count > input[type=number] {
+  width: 70px;
+  margin-right: 6px
 }
