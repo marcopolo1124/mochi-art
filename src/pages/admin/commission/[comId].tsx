@@ -1,13 +1,17 @@
-import React, {useState} from 'react'
-import { getCommission } from '@/lib'
+import React, {useState, useEffect} from 'react'
+import { getCommission, updateCommissionStatus } from '@/lib'
 import { CommissionType } from '@/types'
 import {GetServerSidePropsContext} from 'next'
 import Image from 'next/image'
 import { RouteGuard } from '@/components'
 
 const Commission = ({commission, images}: {commission: CommissionType, images: any}) => {
-  const {character_name, scope, com_type, details, name, email, date_of_purchase, commission_status} = commission
-  const [viewStatus, setViewStatus] = useState(commission_status) 
+  const {id, character_name, scope, com_type, details, name, email, date_of_purchase, commission_status} = commission
+  const [viewStatus, setViewStatus] = useState(commission_status)
+
+  useEffect(() =>{
+    updateCommissionStatus(id, viewStatus)
+  }, [viewStatus])
   
   return (
     <RouteGuard>
@@ -21,7 +25,6 @@ const Commission = ({commission, images}: {commission: CommissionType, images: a
         </div>
         <label htmlFor="status"><strong>Status:</strong></label>
         <select id="com-status" name="status" value={viewStatus} onChange={(e) => {setViewStatus(e.target.value)}}>
-            <option value="">All</option>
             <option value="pending">Pending</option>
             <option value="rejected">Rejected</option>
             <option value="completed">Completed</option>
