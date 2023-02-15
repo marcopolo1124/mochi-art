@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postCommission = exports.getCommission = exports.getCommissionsWithStatus = void 0;
+exports.updateCommissionStatus = exports.postCommission = exports.getCommission = exports.getCommissionsWithStatus = void 0;
 const pool_1 = __importDefault(require("./pool"));
 const crypto_1 = __importDefault(require("crypto"));
 function getCommissionsWithStatus(req, res, next) {
@@ -81,3 +81,20 @@ function postCommission(req, res, next) {
     });
 }
 exports.postCommission = postCommission;
+function updateCommissionStatus(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { commission_id, status } = req.body;
+            if (!commission_id || !status) {
+                const err = new Error("missing information");
+                next(err);
+            }
+            const updateReq = yield pool_1.default.query("UPDATE commissions.commissions SET commission_status=$2 WHERE id=$1", [commission_id, status]);
+            res.send({ message: "updated" });
+        }
+        catch (err) {
+            next(err);
+        }
+    });
+}
+exports.updateCommissionStatus = updateCommissionStatus;

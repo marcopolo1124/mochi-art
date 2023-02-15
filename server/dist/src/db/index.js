@@ -17,5 +17,6 @@ exports.default = {
     getCommissionsWithStatus: commissions_1.getCommissionsWithStatus,
     postCommission: commissions_1.postCommission,
     getFeatured: site_1.getFeatured,
-    getImage: site_1.getImage
+    getImage: site_1.getImage,
+    updateCommissionStatus: commissions_1.updateCommissionStatus
 };

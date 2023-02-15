@@ -23,4 +23,5 @@ const commissions = express_1.default.Router();
 commissions.get('/', db_1.default.getCommissionsWithStatus);
 commissions.get('/:id', db_1.default.getCommission);
 commissions.post('/upload', multipleUpload, db_1.default.postCommission);
+commissions.patch('/status', db_1.default.updateCommissionStatus);
 exports.default = commissions;

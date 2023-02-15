@@ -57,7 +57,7 @@ const OrderForm = () => {
         setHuman(true)
     }
 
-    const handleSubmit = (e: React.ChangeEvent) =>{
+    const handleSubmit = (e: React.FormEvent) =>{
         if (!human){
             e.preventDefault()
             return

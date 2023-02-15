@@ -1,6 +1,6 @@
 import { getAdminByUsername, updateAdminPassword, deleteAdmin} from "./admin";
 import {getState, getGallery, toggleArtTradeState, toggleCommissionState, postImage, deleteImage, getFeatured, getImage} from './site'
-import { getCommission, getCommissionsWithStatus, postCommission } from "./commissions";
+import { getCommission, getCommissionsWithStatus, postCommission, updateCommissionStatus } from "./commissions";
 
 export default {
     getAdminByUsername,
@@ -16,5 +16,6 @@ export default {
     getCommissionsWithStatus,
     postCommission,
     getFeatured,
-    getImage
+    getImage,
+    updateCommissionStatus
 }

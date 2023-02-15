@@ -80,5 +80,21 @@ export async function postCommission(req: Request<RequestParams, ResponseBody, C
     }catch (err){
         next(err)
     }
+}
 
+export async function updateCommissionStatus(req: Request, res: Response, next: NextFunction){
+    try{
+        const {commission_id, status} = req.body
+        if (!commission_id || ! status) {
+            const err = new Error ("missing information")
+            next(err)
+        }
+        const updateReq = await pool.query(
+            "UPDATE commissions.commissions SET commission_status=$2 WHERE id=$1",
+            [commission_id, status]
+        )
+        res.send({message: "updated"})
+    } catch(err){
+        next(err)
+    }
 }

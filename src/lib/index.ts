@@ -53,6 +53,20 @@ function putRequest({url, route, body}: RequestOptions){
     )
 }
 
+function patchRequest({url, route, body}: RequestOptions){
+    return fetch(
+        `${url}${route}`,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body? JSON.stringify(body): null,
+            credentials: 'include'
+        }
+    )
+}
+
 
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
     const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
@@ -246,4 +260,21 @@ export async function getCommission(comId: string){
     } else{
         throw new Error(`status: ${comReq.status}`)
     }
+}
+
+export async function updateCommissionStatus(comId: string, status: string){
+    const updateReq = await patchRequest({
+        url: ServerUrl,
+        route: "/commissions/status",
+        body: {
+            commission_id: comId,
+            status: status
+        }
+    })
+    if (updateReq.ok){
+        return {message: "updated"}
+    } else {
+        throw new Error(`status: ${updateReq.status}`)
+    }
+
 }
