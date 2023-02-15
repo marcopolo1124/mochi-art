@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import pool from "./pool";
 import crypto from "crypto"
 import { RequestParams, ResponseBody,
-         RequestBody, StatusQuery, IdQuery,
+         RequestBody, StatusQuery, IdParams,
          CommissionBody, RequestQuery } from "./interfaces";
 import { Pagination } from "../../types/custom";
 
@@ -27,8 +27,8 @@ export async function getCommissionsWithStatus(req: Request<RequestParams, Respo
 
 }
 
-export async function getCommission(req: Request<RequestParams, ResponseBody, RequestBody, IdQuery>, res: Response, next: NextFunction){
-    const {id} = req.query
+export async function getCommission(req: Request<IdParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction){
+    const {id} = req.params
     try{
         const images = pool.query(
             'SELECT * FROM commissions.commission_images WHERE commission_id=$1',
@@ -36,13 +36,13 @@ export async function getCommission(req: Request<RequestParams, ResponseBody, Re
         )
     
         const commission = await pool.query(
-            'SELECT * FROM commissions.commission WHERE id=$1',
+            'SELECT * FROM commissions.commissions WHERE id=$1',
             [id]
         )
     
         if (commission.rows.length > 0){
             res.send({
-                commission,
+                commission: commission.rows[0],
                 images: (await images).rows
             })
         } else{

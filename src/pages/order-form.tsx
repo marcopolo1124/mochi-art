@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { postCommission } from '@/lib'
 import { getStatus } from '@/lib'
 import { Navbar } from '@/components'
+import ReCAPTCHA from "react-google-recaptcha";
 
 type CommissionScope = "bust" | "half-body" | "full-body" | ""
 type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | ""
@@ -36,6 +37,8 @@ const OrderForm = () => {
     const [details, setDetails] = useState<string>("")
     const [agreed, setAgreed] = useState<boolean>(false)
     const [references, setReferences] = useState<File[]>([]);
+    const [human, setHuman] = useState<boolean>(false)
+    const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY ? process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY: ''
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         setReferences(prev => e.target.files? [...prev, ...(Array.from(e.target.files))]: [...prev]);
@@ -50,7 +53,15 @@ const OrderForm = () => {
         setAgreed(prev => !prev)
     }
 
-    const handleSubmit = () =>{
+    const onChange = () => {
+        setHuman(true)
+    }
+
+    const handleSubmit = (e: React.ChangeEvent) =>{
+        if (!human){
+            e.preventDefault()
+            return
+        }
         const formData = new FormData()
         formData.append("name", name)
         formData.append("email", email)
@@ -124,9 +135,12 @@ const OrderForm = () => {
                 {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
             </div>
             
-            <input name="agree" type={"checkbox"} onClick={handleCheck} checked={agreed} required/>
+            <input name="agree" type={"checkbox"} onChange={handleCheck} checked={agreed} required/>
             <label htmlFor="agree">I have read and agreed to the <Link href="/terms-of-service"><span className="terms-link">terms of service</span></Link></label>
-            
+            <ReCAPTCHA
+                sitekey={siteKey}
+                onChange={onChange}
+            />
 
             <input type={"submit"} value="SUBMIT"/>
                 

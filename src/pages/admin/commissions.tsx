@@ -1,17 +1,21 @@
 import { RouteGuard } from '@/components'
 import { getCommissions } from '@/lib'
 import React, { useEffect, useState } from 'react'
+import { CommissionType } from '@/types'
 import Link from 'next/link'
 
-const perPage = 30
+const perPage = 7
 
 const Commissions = ({commissions, rowCount}: {commissions: CommissionType[], rowCount: number}) => {
     const [viewStatus, setViewStatus] = useState<string>("pending")
     const [viewCommissions, setViewCommissions] = useState(commissions)
     const [pageCount, setPageCount] = useState<number>(Math.ceil(rowCount / perPage))
-    const [page, setPage] = useState<number>(1)
+    const [page, setPage] = useState<number | undefined>(1)
 
     useEffect(() => {
+        if(!page){
+            return
+        }
         getCommissions(viewStatus, page , perPage, "date_of_purchase")
             .then((value) => {
                 setViewCommissions(value.commissions)
@@ -97,4 +101,3 @@ export async function getServerSideProps(){
 
 export default Commissions
 
-type CommissionType = {id: string, character_name: string, scope: string, com_type:string, details: string, name: string, email:string, date_of_purchase: string, commission_status: string}

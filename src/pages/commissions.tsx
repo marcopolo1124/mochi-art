@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Navbar } from '@/components'
 
 
+
 export async function getServerSideProps(){
   const props = await getStatus()
   return {props}

@@ -16,7 +16,7 @@ export interface StatusQuery {
   orderBy: string
 }
 
-export interface IdQuery {
+export interface IdParams {
   id: string;
 }
 

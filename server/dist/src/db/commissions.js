@@ -35,13 +35,13 @@ function getCommissionsWithStatus(req, res, next) {
 exports.getCommissionsWithStatus = getCommissionsWithStatus;
 function getCommission(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { id } = req.query;
+        const { id } = req.params;
         try {
             const images = pool_1.default.query('SELECT * FROM commissions.commission_images WHERE commission_id=$1', [id]);
-            const commission = yield pool_1.default.query('SELECT * FROM commissions.commission WHERE id=$1', [id]);
+            const commission = yield pool_1.default.query('SELECT * FROM commissions.commissions WHERE id=$1', [id]);
             if (commission.rows.length > 0) {
                 res.send({
-                    commission,
+                    commission: commission.rows[0],
                     images: (yield images).rows
                 });
             }

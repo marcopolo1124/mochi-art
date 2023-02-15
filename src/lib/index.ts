@@ -224,14 +224,26 @@ export async function deleteImages(images: Image[]){
 }
 
 export async function getCommissions(status: string | null, page: number, perPage:number, orderBy: string){
-    const commissionReq = await getRequest({
+    const commissionsReq = await getRequest({
         url: ServerUrl,
         route: `/commissions?${status?`status=${status}`: ""}&page=${page}&perPage=${perPage}&orderBy=${orderBy}`
     })
 
-    if (commissionReq.ok){
-        return await commissionReq.json()
+    if (commissionsReq.ok){
+        return await commissionsReq.json()
     } else{
-        throw new Error(`status: ${commissionReq.status}`)
+        throw new Error(`status: ${commissionsReq.status}`)
+    }
+}
+
+export async function getCommission(comId: string){
+    const comReq = await getRequest({
+        url: ServerUrl,
+        route: `/commissions/${comId}`
+    })
+    if (comReq.ok){
+        return await comReq.json()
+    } else{
+        throw new Error(`status: ${comReq.status}`)
     }
 }

@@ -5,24 +5,28 @@ import AdminNav from './AdminNav'
 import { logout } from '@/lib'
 
 const RouteGuard = ({children}: {children: JSX.Element}) => {
-    const [auth, setAuth] = useState<boolean>(false)
+    const [auth, setAuth] = useState<string>("blank")
     const setAuthToTrue = () =>{
-        setAuth(true)
+        setAuth("true")
     }
     useEffect(()=>{
         getUser()
             .then((value) => {
                 if (value.user?.username){
-                    setAuth(true)
+                    setAuth("true")
+                } else{
+                    setAuth("false")
                 }
             })
     }, [auth])
 
-    
+    console.log(auth)
     return (
         <>
-            {auth && <AdminNav handleLogout={() => {logout().then(() => setAuth(false))}}/>}
-            {auth? children: <Login setAuth={setAuthToTrue}/>}
+            {auth==="blank" && <div id="blank"/>}
+            {auth==="true" && <AdminNav handleLogout={() => {logout().then(() => setAuth("false"))}}/>}
+            {auth==="true" && children}
+            {auth==="false" && <Login setAuth={setAuthToTrue}/>}
         </>
     )
 }
