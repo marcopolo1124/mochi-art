@@ -18,6 +18,9 @@ const RouteGuard = ({children}: {children: JSX.Element}) => {
                     setAuth("false")
                 }
             })
+            .catch((err) => {
+                console.log(err)
+            })
     }, [auth])
 
     console.log(auth)
