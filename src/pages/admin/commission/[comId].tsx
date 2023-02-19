@@ -11,7 +11,7 @@ const Commission = ({commission, images}: {commission: CommissionType, images: a
 
   useEffect(() =>{
     updateCommissionStatus(id, viewStatus)
-  }, [viewStatus])
+  }, [viewStatus, id])
   
   return (
     <RouteGuard>
