@@ -78,10 +78,10 @@ export const getImages = async (orderBy: string, page: number, perPage: number) 
         if (imagesRequest.ok){
             return await imagesRequest.json()
         } else{
-            throw new Error()
+            throw new Error(`status: ${imagesRequest.status}`)
         }
     } catch (error){
-        throw new Error()
+        throw new Error(`${error}`)
     }
 
 }
@@ -113,10 +113,10 @@ export const getFeatured = async () => {
         if (imagesRequest.ok){
             return await imagesRequest.json()
         } else{
-            throw new Error()
+            throw new Error(`Error: ${imagesRequest.status}`)
     }
     } catch (error){
-        throw new Error()
+        throw new Error(`${error}`)
     }
 }
 
