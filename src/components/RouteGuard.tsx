@@ -10,6 +10,7 @@ const RouteGuard = ({children}: {children: JSX.Element}) => {
         setAuth("true")
     }
     useEffect(()=>{
+        console.log('effect')
         getUser()
             .then((value) => {
                 console.log(value)
@@ -23,7 +24,7 @@ const RouteGuard = ({children}: {children: JSX.Element}) => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [auth])
+    }, [])
     return (
         <>
             {auth==="blank" && <div id="blank"/>}
