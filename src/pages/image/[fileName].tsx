@@ -43,7 +43,7 @@ type ImageProp = {image: ImageType}
 function ImageContainer({image}: ImageProp){
     const {file_name, image_description, title, date_posted} = image
     const dateString = new Date(date_posted).toLocaleDateString()
-    const parseDetail = (string: String) => string.split('\n').map(line => <p>{line}</p>)
+    const parseDetail = (string: String) => string.split('\n').map((line, index) => <p key={`${line}${index}`}>{line}</p>)
     return (
         <div>
             <div className="image-container">

@@ -15,7 +15,7 @@ type commissionProps = {
   art_trade_open: boolean
 }
 
-const commissions = ({commission_open, art_trade_open}: commissionProps) => {
+const Commissions = ({commission_open, art_trade_open}: commissionProps) => {
     const [commissionStatus, setCommissionStatus] = useState<boolean>(commission_open)
     const [artTradeStatus, setArtTradeStatus] = useState<boolean>(art_trade_open)
   
@@ -99,7 +99,7 @@ const commissions = ({commission_open, art_trade_open}: commissionProps) => {
   )
 }
 
-export default commissions
+export default Commissions
 
 
 function RatesTable () {

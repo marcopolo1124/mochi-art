@@ -3,7 +3,7 @@ import { getStatus, getUser } from '@/lib'
 import React, {useState} from 'react'
 import { toggleCommissionStatus, toggleArtTradeStatus } from '@/lib'
 
-const admin = ({commission_open, art_trade_open, init}: {commission_open: boolean, art_trade_open: boolean, init: boolean}) => {
+const Admin = ({commission_open, art_trade_open, init}: {commission_open: boolean, art_trade_open: boolean, init: boolean}) => {
     const [commissionState, setCommissionState] = useState<boolean>(commission_open)
     const [artTradeState, setArtTradeState] = useState<boolean>(art_trade_open)
 
@@ -41,7 +41,7 @@ const admin = ({commission_open, art_trade_open, init}: {commission_open: boolea
     )
 }
 
-export default admin
+export default Admin
 
 export async function getServerSideProps(){
     const status = await getStatus()

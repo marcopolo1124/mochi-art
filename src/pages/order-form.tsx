@@ -132,7 +132,7 @@ const OrderForm = () => {
             <div className="file-upload">
                 <label htmlFor="references" className='upload-label'><FiUpload/> Upload reference files</label>
                 <input type="file" id="references" onChange={handleFileChange} name="references" multiple />
-                {references.map((reference, index) => <FileContainer file={reference} index={index} removeReference={removeReference}/>)}
+                {references.map((reference, index) => <FileContainer key={reference.name} file={reference} index={index} removeReference={removeReference}/>)}
             </div>
             
             <input name="agree" type={"checkbox"} onChange={handleCheck} checked={agreed} required/>
@@ -158,14 +158,12 @@ type fileProps = {
     index: number
 }
 
-
-
 function FileContainer({file, removeReference, index}: fileProps) {
     const handleClick = () =>{
         removeReference(index)
     }
     return (
-            <div className="file-container"><p>{file.name}</p><span onClick={handleClick}>&times;</span></div>
+            <div className="file-container"><p>{file.toString()}</p><span onClick={handleClick}>&times;</span></div>
     )
     
 }

@@ -63,7 +63,7 @@ const termsOfService = () => {
           </ul>
         </div>
         <div className='cant-do'>
-          <h3 className="terms-h3" id="cant">I can't do</h3>
+          <h3 className="terms-h3" id="cant">I can&apos;t do</h3>
           <ul className="terms-ul">
             <li>NSFW</li>
             <li>Gore</li>

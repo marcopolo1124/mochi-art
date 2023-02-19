@@ -72,7 +72,7 @@ const References = ({images}: {images: ComImageType[]}) => {
       </div>
 
       <div className='products-container'>
-          {images?.map( image => <ComImage image={image}/>)}
+          {images?.map( image => <ComImage key={image.file_name} image={image}/>)}
       </div>
       </>
   )
