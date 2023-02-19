@@ -68,7 +68,7 @@ function patchRequest({url, route, body}: RequestOptions){
 }
 
 export const getHome = async () => {
-    const request = await getRequest({url: ServerUrl, route: ""})
+    const request = await getRequest({url: ServerUrl, route: "/"})
     console.log(await request.json())
 }
 
