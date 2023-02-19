@@ -105,7 +105,7 @@ export const getImage = async (fileName: string) => {
 
 
 export const getFeatured = async () => {
-    try{
+    // try{
         const imagesRequest = await getRequest({
             url: ServerUrl,
             route: `/images/featured`
@@ -115,9 +115,9 @@ export const getFeatured = async () => {
         } else{
             throw new Error(`Error: ${imagesRequest.status}`)
     }
-    } catch (error){
-        throw new Error(`${error}`)
-    }
+    // } catch (error){
+    //     throw new Error(`${error}`)
+    // }
 }
 
 export const getStatus = async () => {
