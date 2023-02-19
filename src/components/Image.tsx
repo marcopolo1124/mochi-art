@@ -4,6 +4,7 @@ import { Image as ImageType } from '@/types'
 import Link from 'next/link'
 const GalleryImage = ({title, file_name}: ImageType) => {
   const src = `${process.env.NEXT_PUBLIC_SERVER_URL}/static-gallery/${file_name}`
+  console.log(src)
   return (
     <div className="product-card">
       <Link href={`image/${file_name}`}>
