@@ -67,6 +67,11 @@ function patchRequest({url, route, body}: RequestOptions){
     )
 }
 
+export const getHome = async () => {
+    const request = await getRequest({url: ServerUrl, route: ""})
+    console.log(await request.json())
+}
+
 
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
     try{
@@ -77,8 +82,11 @@ export const getImages = async (orderBy: string, page: number, perPage: number) 
         })
         if (imagesRequest.ok){
             return await imagesRequest.json()
-        } else{
-            throw new Error(`status: ${imagesRequest.status}`)
+        }
+        if (imagesRequest.status === 404) {
+            return {images: []}
+        }else{
+            throw new Error(`gallery status: ${imagesRequest.status}`)
         }
     } catch (error){
         throw new Error(`${error}`)
@@ -112,8 +120,11 @@ export const getFeatured = async () => {
         })
         if (imagesRequest.ok){
             return await imagesRequest.json()
+        }
+        if (imagesRequest.status === 404) {
+            return {images: []}
         } else{
-            throw new Error(`Error: ${imagesRequest.status}`)
+            throw new Error(`Featured Status: ${imagesRequest.status}`)
     }
     // } catch (error){
     //     throw new Error(`${error}`)

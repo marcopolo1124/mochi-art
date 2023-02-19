@@ -1,14 +1,19 @@
-import { getFeatured, getImages } from '@/lib'
+import { getFeatured, getImages, getHome } from '@/lib'
 import { Image } from '@/types'
 import React from 'react'
-import { HeroBanner, Gallery, Featured, Navbar } from '../components'
+import { HeroBanner, Featured, Navbar } from '../components'
 
 type homeProps = {
   featured: {images: Image[]}
   gallery: {images: Image[]}
+  error: null | string
 }
 
-const Home = ({featured, gallery}: homeProps) => {
+const Home = ({featured, gallery, error}: homeProps) => {
+  getHome()
+  if (error){
+    console.log(error)
+  }
   return (
     <>
     <Navbar/>
@@ -34,14 +39,8 @@ export async function getServerSideProps() {
     return {props: {featured, gallery}}
   } catch(error){
     console.log(error)
-    return {props: {featured: null, gallery: null}}
+    return {props: {featured: null, gallery: null, error: `${error}`}}
   }
-
-  
-
 }
-
-
-
 
 export default Home
