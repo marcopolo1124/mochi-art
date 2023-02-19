@@ -16,7 +16,7 @@ const Home = ({featured, gallery}: homeProps) => {
       <div className="home">
           <HeroBanner/>
           <main className='main-container'>
-          <Featured images={gallery.images}/>
+          {featured !== null? <Featured images={gallery.images}/>: <p>Cannot load featured</p>}
           {/* <Gallery images={gallery.images}/> */}
           </main>
       </div>
@@ -28,9 +28,16 @@ const Home = ({featured, gallery}: homeProps) => {
 }
 
 export async function getServerSideProps() {
-  const featured = await getFeatured()
-  const gallery = await getImages("date", 1, 1000)
-  return {props: {featured, gallery}}
+  try{
+    const featured = await getFeatured()
+    const gallery = await getImages("date", 1, 1000)
+    return {props: {featured, gallery}}
+  } catch(error){
+    console.log(error)
+    return {props: {featured: null, gallery: null}}
+  }
+
+  
 
 }
 

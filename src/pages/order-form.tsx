@@ -15,8 +15,13 @@ type commissionProps = {
   }
 
 export async function getServerSideProps(){
+try{
     const props = await getStatus()
     return {props}
+} catch(err){
+    console.log(err)
+    return {props: {commission_open: false, art_trade_open: false}}
+}
 }
 
 const OrderFormContainer = ({commission_open}: commissionProps) => {

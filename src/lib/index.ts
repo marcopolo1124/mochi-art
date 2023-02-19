@@ -69,76 +69,101 @@ function patchRequest({url, route, body}: RequestOptions){
 
 
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
-    const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
-    const imagesRequest = await getRequest({
-        url: ServerUrl,
-        route
-    })
-    if (imagesRequest.ok){
-        return await imagesRequest.json()
-    } else{
+    try{
+        const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
+        const imagesRequest = await getRequest({
+            url: ServerUrl,
+            route
+        })
+        if (imagesRequest.ok){
+            return await imagesRequest.json()
+        } else{
+            throw new Error()
+        }
+    } catch (error){
         throw new Error()
     }
+
 }
 
 export const getImage = async (fileName: string) => {
-    const route = `/images/${fileName}`
-    const imageRequest = await getRequest({
-        url: ServerUrl,
-        route
-    })
-    if (imageRequest.ok){
-        return await imageRequest.json()
-    } else{
+    try{
+        const route = `/images/${fileName}`
+        const imageRequest = await getRequest({
+            url: ServerUrl,
+            route
+        })
+        if (imageRequest.ok){
+            return await imageRequest.json()
+        } else{
+            throw new Error()
+        }
+    } catch (error){
         throw new Error()
     }
 }
 
 
 export const getFeatured = async () => {
-    const imagesRequest = await getRequest({
-        url: ServerUrl,
-        route: `/images/featured`
-    })
-    if (imagesRequest.ok){
-        return await imagesRequest.json()
-    } else{
+    try{
+        const imagesRequest = await getRequest({
+            url: ServerUrl,
+            route: `/images/featured`
+        })
+        if (imagesRequest.ok){
+            return await imagesRequest.json()
+        } else{
+            throw new Error()
+    }
+    } catch (error){
         throw new Error()
     }
 }
 
 export const getStatus = async () => {
-    const statusRequest = await getRequest({
-        url: ServerUrl,
-        route: '/state'
-    })
-    if (statusRequest.ok){
-        return await statusRequest.json()
-    } else{
+    try{
+        const statusRequest = await getRequest({
+            url: ServerUrl,
+            route: '/state'
+        })
+        if (statusRequest.ok){
+            return await statusRequest.json()
+        } else{
+            throw new Error()
+        }
+    } catch (error){
         throw new Error()
     }
 }
 
 export const toggleCommissionStatus = async () => {
-    const statusRequest = await putRequest({
-        url: ServerUrl,
-        route: '/state/commission'
-    })
-    if (statusRequest.ok){
-        return await statusRequest.json()
-    } else{
+    try{
+        const statusRequest = await putRequest({
+            url: ServerUrl,
+            route: '/state/commission'
+        })
+        if (statusRequest.ok){
+            return await statusRequest.json()
+        } else{
+            throw new Error()
+        }
+    } catch (error){
         throw new Error()
     }
 }
 
 export const toggleArtTradeStatus = async () => {
-    const statusRequest = await putRequest({
-        url: ServerUrl,
-        route: '/state/art-trade'
-    })
-    if (statusRequest.ok){
-        return await statusRequest.json()
-    } else{
+    try{
+        const statusRequest = await putRequest({
+            url: ServerUrl,
+            route: '/state/art-trade'
+        })
+        if (statusRequest.ok){
+            return await statusRequest.json()
+        } else{
+            throw new Error()
+        }
+    } catch (error){
         throw new Error()
     }
 }
@@ -151,58 +176,70 @@ export function postCommission(data: FormData){
             body: data,
             credentials: 'include'
         }
-    ) 
+    ).catch((err) => {throw new Error()})
 }
 
 export async function loginUser({username, password}: {username:string, password: string}){
-    if (!username || !password) {
-        throw new Error('missing credentials')
-    }
-    const loginRequest = await postRequest(
-        {
-            url: ServerUrl,
-            route:'/admin/login',
-            body: {username, password}
+    try{
+        if (!username || !password) {
+            throw new Error('missing credentials')
         }
-    )
-    if (loginRequest.status === 404){
-        return 400
-    }
-    if (loginRequest.ok){
-        return 200
-    } else {
-        throw new Error(`status: ${loginRequest.status}`)
+        const loginRequest = await postRequest(
+            {
+                url: ServerUrl,
+                route:'/admin/login',
+                body: {username, password}
+            }
+        )
+        if (loginRequest.status === 404){
+            return 400
+        }
+        if (loginRequest.ok){
+            return 200
+        } else {
+            throw new Error(`status: ${loginRequest.status}`)
+        }
+    } catch (error){
+        throw new Error()
     }
 }
 
 export async function getUser(){
-    const userRequest = await getRequest({url: ServerUrl, route: "/admin/user"})
-    if (userRequest.ok){
-        return await userRequest.json()
-    } else {
-        throw new Error(`status ${userRequest.status}`)
+    try{
+        const userRequest = await getRequest({url: ServerUrl, route: "/admin/user"})
+        if (userRequest.ok){
+            return await userRequest.json()
+        } else {
+            throw new Error(`status ${userRequest.status}`)
+        }
+    } catch (error){
+        throw new Error()
     }
 }
 
 export async function logout(){
-    const logoutRequest = await fetch(
-        `${ServerUrl}/admin/logout`,
-        {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
+    try{
+        const logoutRequest = await fetch(
+            `${ServerUrl}/admin/logout`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            }
+        )
+        if (logoutRequest.ok){
+            return {message: 'ok'}
+        } else{
+            throw new Error(`status: ${logoutRequest.status}`)
         }
-    )
-    if (logoutRequest.ok){
-        return {message: 'ok'}
-    } else{
-        throw new Error(`status: ${logoutRequest.status}`)
+    } catch (error){
+        throw new Error()
     }
 }
 
-export async function uploadImage(data: FormData){
+export function uploadImage(data: FormData){
     fetch(
         `${ServerUrl}/images/upload`,
         {
@@ -210,71 +247,86 @@ export async function uploadImage(data: FormData){
             body: data,
             credentials: 'include'
         }
-    ) 
+    ).catch(err => console.log(err))
 }
 
 export async function deleteImages(images: Image[]){
-    let success: string[] = []
-    images.forEach((image) => {
-        const body = {
-            fileName: image.file_name
-        }
-        fetch(
-            `${ServerUrl}/images/delete?fileName=${image.file_name}`,
-            {
-                method: 'DELETE',
-                credentials: 'include'
+    try{
+        let success: string[] = []
+        images.forEach((image) => {
+            const body = {
+                fileName: image.file_name
             }
-        
-        ).then(
-            async (value) => {
-                if (value.ok){
-                    success.push(image.file_name)
+            fetch(
+                `${ServerUrl}/images/delete?fileName=${image.file_name}`,
+                {
+                    method: 'DELETE',
+                    credentials: 'include'
                 }
-            }
-        )
-    })
-    return {message: `Deleted ${success}`}
+            
+            ).then(
+                async (value) => {
+                    if (value.ok){
+                        success.push(image.file_name)
+                    }
+                }
+            )
+        })
+        return {message: `Deleted ${success}`}
+    } catch (error){
+        throw new Error()
+    }
 }
 
 export async function getCommissions(status: string | null, page: number, perPage:number, orderBy: string){
-    const commissionsReq = await getRequest({
-        url: ServerUrl,
-        route: `/commissions?${status?`status=${status}`: ""}&page=${page}&perPage=${perPage}&orderBy=${orderBy}`
-    })
+    try{
+        const commissionsReq = await getRequest({
+            url: ServerUrl,
+            route: `/commissions?${status?`status=${status}`: ""}&page=${page}&perPage=${perPage}&orderBy=${orderBy}`
+        })
 
-    if (commissionsReq.ok){
-        return await commissionsReq.json()
-    } else{
-        throw new Error(`status: ${commissionsReq.status}`)
+        if (commissionsReq.ok){
+            return await commissionsReq.json()
+        } else{
+            throw new Error(`status: ${commissionsReq.status}`)
+        }
+    } catch (error){
+        throw new Error()
     }
 }
 
 export async function getCommission(comId: string){
-    const comReq = await getRequest({
-        url: ServerUrl,
-        route: `/commissions/${comId}`
-    })
-    if (comReq.ok){
-        return await comReq.json()
-    } else{
-        throw new Error(`status: ${comReq.status}`)
-    }
+    try{
+        const comReq = await getRequest({
+            url: ServerUrl,
+            route: `/commissions/${comId}`
+        })
+        if (comReq.ok){
+            return await comReq.json()
+        } else{
+            throw new Error(`status: ${comReq.status}`)
+        }
+    } catch (error){
+        throw new Error()
+}
 }
 
 export async function updateCommissionStatus(comId: string, status: string){
-    const updateReq = await patchRequest({
-        url: ServerUrl,
-        route: "/commissions/status",
-        body: {
-            commission_id: comId,
-            status: status
+    try{
+        const updateReq = await patchRequest({
+            url: ServerUrl,
+            route: "/commissions/status",
+            body: {
+                commission_id: comId,
+                status: status
+            }
+        })
+        if (updateReq.ok){
+            return {message: "updated"}
+        } else {
+            throw new Error(`status: ${updateReq.status}`)
         }
-    })
-    if (updateReq.ok){
-        return {message: "updated"}
-    } else {
-        throw new Error(`status: ${updateReq.status}`)
+    } catch (error){
+        throw new Error()
     }
-
 }

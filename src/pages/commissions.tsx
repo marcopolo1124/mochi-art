@@ -6,8 +6,13 @@ import { Navbar } from '@/components'
 
 
 export async function getServerSideProps(){
-  const props = await getStatus()
-  return {props}
+  try{
+    const props = await getStatus()
+    return {props}
+  } catch(err){
+    console.log(err)
+    return {props: {commission_open: false, art_trade_open: false}}
+  }
 }
 
 type commissionProps = {
@@ -19,16 +24,13 @@ const Commissions = ({commission_open, art_trade_open}: commissionProps) => {
     const [commissionStatus, setCommissionStatus] = useState<boolean>(commission_open)
     const [artTradeStatus, setArtTradeStatus] = useState<boolean>(art_trade_open)
   
-    useEffect(() => {
-      getStatus()
-        .then(({commission_open, art_trade_open}: siteStatus) => {
-          setCommissionStatus(commission_open)
-          setArtTradeStatus(art_trade_open)
-        })
-    }, [])
-  
-
-
+    // useEffect(() => {
+    //   getStatus()
+    //     .then(({commission_open, art_trade_open}: siteStatus) => {
+    //       setCommissionStatus(commission_open)
+    //       setArtTradeStatus(art_trade_open)
+    //     })
+    // }, [])
 
   return (
     <>
