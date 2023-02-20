@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getImage } from '@/lib'
-import { Image as ImageType } from '@/types'
+import { Image as ImageType } from 'types'
 import Image from 'next/image'
 
 const ImageDetail = () => {

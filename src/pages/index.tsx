@@ -1,7 +1,8 @@
-import { getFeatured, getImages, getHome } from '@/lib'
-import { Image } from '@/types'
+import { getImages} from '@/lib'
+import { Image } from 'types'
 import React from 'react'
 import { HeroBanner, Featured, Navbar } from '../components'
+import db from '@/lib/db'
 
 type homeProps = {
   featured: {images: Image[]}
@@ -10,10 +11,8 @@ type homeProps = {
 }
 
 const Home = ({featured, gallery, error}: homeProps) => {
-  getHome()
-  if (error){
-    console.log(error)
-  }
+  
+  console.log(featured, gallery)
   return (
     <>
     <Navbar/>
@@ -21,7 +20,7 @@ const Home = ({featured, gallery, error}: homeProps) => {
       <div className="home">
           <HeroBanner/>
           <main className='main-container'>
-          {featured !== null? <Featured images={gallery.images}/>: <p>Cannot load featured</p>}
+          {gallery !== null? <Featured images={gallery.images}/>: <p>Cannot load featured</p>}
           {/* <Gallery images={gallery.images}/> */}
           </main>
       </div>
@@ -34,12 +33,11 @@ const Home = ({featured, gallery, error}: homeProps) => {
 
 export async function getServerSideProps() {
   try{
-    const featured = await getFeatured()
     const gallery = await getImages("date", 1, 1000)
-    return {props: {featured, gallery}}
+    return {props: {gallery}}
   } catch(error){
     console.log(error)
-    return {props: {featured: null, gallery: null, error: `${error}`}}
+    return {props: {gallery: null, error: `${error}`}}
   }
 }
 

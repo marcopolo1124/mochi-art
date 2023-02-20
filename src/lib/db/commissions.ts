@@ -1,12 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { NextHandler } from 'next-connect';
 import pool from "./pool";
 import crypto from "crypto"
 import { RequestParams, ResponseBody,
          RequestBody, StatusQuery, IdParams,
          CommissionBody, RequestQuery } from "./interfaces";
-import { Pagination } from "../../types/custom";
 
-export async function getCommissionsWithStatus(req: Request<RequestParams, ResponseBody, RequestBody, StatusQuery>, res: Response, next: NextFunction){
+export async function getCommissionsWithStatus(req: NextApiRequest, res: NextApiResponse, next: NextHandler){
     const {status, perPage, orderBy, page} = req.query
     const query = `SELECT * FROM commissions.commissions ${status? "WHERE commission_status=$4": ""} ORDER BY $1 OFFSET $2 LIMIT $3`
     const bindVarBase = [orderBy, perPage * (page - 1), perPage]
@@ -27,7 +27,7 @@ export async function getCommissionsWithStatus(req: Request<RequestParams, Respo
 
 }
 
-export async function getCommission(req: Request<IdParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction){
+export async function getCommission(req: NextApiRequest, res: NextApiResponse, next: NextHandler){
     const {id} = req.params
     try{
         const images = pool.query(
@@ -57,7 +57,7 @@ export async function getCommission(req: Request<IdParams, ResponseBody, Request
 
 }
 
-export async function postCommission(req: Request<RequestParams, ResponseBody, CommissionBody, RequestQuery>, res: Response, next: NextFunction) {
+export async function postCommission(req: NextApiRequest<RequestParams, ResponseBody, CommissionBody, RequestQuery>, res: NextApiResponse, next: NextHandler) {
     const images = req.files as { [references: string]: Express.Multer.File[] };
     try{
         const {name, email, characterName, numberOfCharacters, scope, comType, details} = req.body
@@ -82,7 +82,7 @@ export async function postCommission(req: Request<RequestParams, ResponseBody, C
     }
 }
 
-export async function updateCommissionStatus(req: Request, res: Response, next: NextFunction){
+export async function updateCommissionStatus(req: NextApiRequest, res: NextApiResponse, next: NextHandler){
     try{
         const {commission_id, status} = req.body
         if (!commission_id || ! status) {

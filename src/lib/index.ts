@@ -1,4 +1,4 @@
-import { Image } from "@/types"
+import { Image } from "types"
 
 const ServerUrl = "http://localhost:3000/api"
 

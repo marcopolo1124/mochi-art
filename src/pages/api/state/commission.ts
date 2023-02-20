@@ -2,10 +2,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect'
 import db from '@/lib/db'
-type Data = {
-  message: string
-}
-const handler = nc()
-    .put(db.toggleCommissionState)
+import pool from '@/lib/db/pool'
+
+const handler = nc<NextApiRequest, NextApiResponse>()
+    .put(async (req, res, next) => {
+        try{
+            await pool.query(
+                'UPDATE site.state \
+                SET commission_open = NOT commission_open'
+            )
+            res.send({message: 'updated'})
+        } catch(err){
+            next(err)
+        }
+    })
 
 export default handler

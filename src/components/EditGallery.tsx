@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Image as ImageType} from '@/types'
+import { Image as ImageType} from 'types'
 import Image from 'next/image'
 import { getFeatured, deleteImages} from '@/lib'
 import { FiTrash } from 'react-icons/fi'

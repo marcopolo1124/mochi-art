@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Image } from '@/types'
+import { Image } from 'types'
 import { getImages } from '@/lib'
 import GalleryImage from './Image'
 

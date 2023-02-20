@@ -1,22 +1,6 @@
-import pool from './pool'
-import { Response, Request, NextFunction } from 'express'
-import { Pagination } from '../../types/custom'
-import { RequestParams, ResponseBody,
-        RequestBody, RequestQuery, AddImageBody, PaginationQuery} from "./interfaces";
-import fs from 'fs'
 
-export async function getState(req: Request, res: Response, next: NextFunction){
-    try{
-        const state = await pool.query(
-            'SELECT commission_open, art_trade_open FROM site.state'
-        )
-        res.send(state.rows[0])
-    } catch(err) {
-        next(err)
-    }
-}
 
-export async function toggleCommissionState(req: Request, res: Response, next: NextFunction){
+export async function toggleCommissionState(req: NextApiRequest, res: NextApiResponse, next: any){
     try{
         await pool.query(
             'UPDATE site.state \
@@ -28,7 +12,7 @@ export async function toggleCommissionState(req: Request, res: Response, next: N
     }
 }
 
-export async function toggleArtTradeState(req: Request, res: Response, next: NextFunction){
+export async function toggleArtTradeState(req: NextApiRequest, res: NextApiResponse, next: any){
     try{
         await pool.query(
             'UPDATE site.state \
@@ -40,7 +24,7 @@ export async function toggleArtTradeState(req: Request, res: Response, next: Nex
     }
 }
 
-export async function postImage(req: Request<RequestParams, ResponseBody, AddImageBody, RequestQuery>, res: Response, next: NextFunction){
+export async function postImage(req: NextApiRequest, res: NextApiResponse, next: any){
     try{
         const fileName = req.fileName
         const {title, description, featured} = req.body
@@ -58,7 +42,7 @@ export async function postImage(req: Request<RequestParams, ResponseBody, AddIma
     }
 }
 
-export async function getFeatured(req: Request, res: Response, next: NextFunction){
+export async function getFeatured(req: NextApiRequest, res: NextApiResponse, next: any){
     try{
         const featured = await pool.query(
             'SELECT * FROM site.gallery_images WHERE featured=true ORDER BY title LIMIT 10',
@@ -69,7 +53,7 @@ export async function getFeatured(req: Request, res: Response, next: NextFunctio
     }
 }
 
-export async function getGallery(req: Request<RequestParams, ResponseBody, RequestBody, PaginationQuery>, res: Response, next: NextFunction){
+export async function getGallery(req: NextApiRequest, res: NextApiResponse, next: any){
     try{
         const {perPage, orderBy, page}: Pagination = req.query
         const rowCount = pool.query(
@@ -89,7 +73,7 @@ export async function getGallery(req: Request<RequestParams, ResponseBody, Reque
     }
 }
 
-export async function deleteImage(req: Request, res: Response, next: NextFunction){
+export async function deleteImage(req: NextApiRequest, res: NextApiResponse, next: any){
     try{
         const {fileName} = req.query
         await pool.query(
@@ -107,7 +91,7 @@ export async function deleteImage(req: Request, res: Response, next: NextFunctio
     }
 }
 
-export async function getImage(req:Request, res: Response, next: NextFunction){
+export async function getImage(req:NextApiRequest, res: NextApiResponse, next: any){
     try{
         const {fileName} = req.params
         const images = await pool.query(
