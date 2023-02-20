@@ -1,6 +1,6 @@
 import { Image } from "@/types"
 
-const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL ? process.env.NEXT_PUBLIC_SERVER_URL: ""
+const ServerUrl = "http://localhost:3000/api"
 
 if (!ServerUrl){
     throw new Error()
@@ -67,12 +67,6 @@ function patchRequest({url, route, body}: RequestOptions){
     )
 }
 
-export const getHome = async () => {
-    const request = await getRequest({url: ServerUrl, route: "/"})
-    console.log(await request.json())
-}
-
-
 export const getImages = async (orderBy: string, page: number, perPage: number) => {
     try{
         const route = `/images?orderBy=${orderBy}&page=${page}&perPage=${perPage}`
@@ -109,26 +103,6 @@ export const getImage = async (fileName: string) => {
     } catch (error){
         throw new Error()
     }
-}
-
-
-export const getFeatured = async () => {
-    // try{
-        const imagesRequest = await getRequest({
-            url: ServerUrl,
-            route: `/images/featured`
-        })
-        if (imagesRequest.ok){
-            return await imagesRequest.json()
-        }
-        if (imagesRequest.status === 404) {
-            return {images: []}
-        } else{
-            throw new Error(`Featured Status: ${imagesRequest.status}`)
-    }
-    // } catch (error){
-    //     throw new Error(`${error}`)
-    // }
 }
 
 export const getStatus = async () => {
@@ -252,7 +226,7 @@ export async function logout(){
 
 export function uploadImage(data: FormData){
     fetch(
-        `${ServerUrl}/images/upload`,
+        `${ServerUrl}/images`,
         {
             method: 'POST',
             body: data,
@@ -269,7 +243,7 @@ export async function deleteImages(images: Image[]){
                 fileName: image.file_name
             }
             fetch(
-                `${ServerUrl}/images/delete?fileName=${image.file_name}`,
+                `${ServerUrl}/images?fileName=${image.file_name}`,
                 {
                     method: 'DELETE',
                     credentials: 'include'

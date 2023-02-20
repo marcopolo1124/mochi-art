@@ -1,13 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-
+import nc from 'next-connect'
+import db from '@/lib/db'
 type Data = {
-  name: string
+  message: string
 }
+const handler = nc()
+    .put(db.getImage)
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export default handler
