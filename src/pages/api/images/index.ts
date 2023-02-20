@@ -6,13 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import pool from '@/lib/db/pool'
 
-const ImageGallery = "C:/Users/marco/Documents/Personal Projects/mochi-art/public/images_gallery"
-
-interface Pagination {
-    orderBy: string;
-    page: number;
-    perPage: number;
-}
+const ImageGallery = './public/images_gallery'
 
 interface FileNameReq extends NextApiRequest {
     fileName: string;

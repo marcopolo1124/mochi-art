@@ -4,10 +4,11 @@ import crypto from 'crypto'
 import nc from 'next-connect'
 import pool from '@/lib/db/pool'
 import { NextApiRequest, NextApiResponse } from 'next'
+const commissionsPath = './public/commission_gallery'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         console.log(file)
-        cb(null, "C:/Users/marco/Documents/Personal Projects/mochi-art/public/commission_gallery")
+        cb(null, commissionsPath)
     },
     filename: (req, file, cb) =>{
         const fileName = crypto.randomUUID() + path.extname(file.originalname)
