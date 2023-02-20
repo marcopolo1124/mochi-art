@@ -2,7 +2,6 @@ import multer from 'multer'
 import path from 'path'
 import crypto from 'crypto'
 import nc from 'next-connect'
-import db from '@/lib/db'
 import pool from '@/lib/db/pool'
 import { NextApiRequest, NextApiResponse } from 'next'
 const storage = multer.diskStorage({

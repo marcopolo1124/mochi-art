@@ -1,18 +1,16 @@
 import { getImages} from '@/lib'
 import { Image } from 'types'
 import React from 'react'
+import pool from '@/lib/db/pool'
 import { HeroBanner, Featured, Navbar } from '../components'
-import db from '@/lib/db'
 
 type homeProps = {
-  featured: {images: Image[]}
-  gallery: {images: Image[]}
-  error: null | string
+  gallery: Image[]
 }
 
-const Home = ({featured, gallery, error}: homeProps) => {
+const Home = ({gallery}: homeProps) => {
   
-  console.log(featured, gallery)
+  console.log(gallery)
   return (
     <>
     <Navbar/>
@@ -20,7 +18,7 @@ const Home = ({featured, gallery, error}: homeProps) => {
       <div className="home">
           <HeroBanner/>
           <main className='main-container'>
-          {gallery !== null? <Featured images={gallery.images}/>: <p>Cannot load featured</p>}
+          {gallery !== null? <Featured images={gallery}/>: <p>Cannot load featured</p>}
           {/* <Gallery images={gallery.images}/> */}
           </main>
       </div>
@@ -31,13 +29,16 @@ const Home = ({featured, gallery, error}: homeProps) => {
   )
 }
 
+
 export async function getServerSideProps() {
   try{
-    const gallery = await getImages("date", 1, 1000)
-    return {props: {gallery}}
+    const gallery = await pool.query(
+      'SELECT * FROM site.gallery_images'
+    )
+    return {props: {gallery: JSON.parse(JSON.stringify(gallery.rows))}}
   } catch(error){
     console.log(error)
-    return {props: {gallery: null, error: `${error}`}}
+    return {props: {gallery: null}}
   }
 }
 
