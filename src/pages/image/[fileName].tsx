@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { getImage } from '@/lib'
-import { Image as ImageType } from 'types'
+import { Image as ImageType } from '@/types'
 import Image from 'next/image'
 
 const ImageDetail = () => {
@@ -44,13 +44,14 @@ function ImageContainer({image}: ImageProp){
     const {file_name, image_description, title, date_posted} = image
     const dateString = new Date(date_posted).toLocaleDateString()
     const parseDetail = (string: String) => string.split('\n').map((line, index) => <p key={`${line}${index}`}>{line}</p>)
+    const src = `/images_gallery/${file_name}`
     return (
         <div>
             <div className="image-container">
                 <Image
                     alt={title}
                     className="main-image"
-                    src={`${process.env.NEXT_PUBLIC_SERVER_URL}/static-gallery/${file_name}`}
+                    src={src}
                     height={500}
                     width={1400}
                 />

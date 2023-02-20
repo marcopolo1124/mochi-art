@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import pool from '@/lib/db/pool'
 
-const ImageGallery = "/public/images_gallery"
+const ImageGallery = "C:/Users/marco/Documents/Personal Projects/mochi-art/public/images_gallery"
 
 interface Pagination {
     orderBy: string;
@@ -93,3 +93,9 @@ const handler = nc<NextApiRequest, NextApiResponse>()
     })
 
 export default handler
+
+export const config = {
+    api: {
+      bodyParser: false, // Disallow body parsing, consume as stream
+    },
+  };

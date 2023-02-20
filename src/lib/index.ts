@@ -1,4 +1,4 @@
-import { Image } from "types"
+import { Image } from "@/types"
 
 const ServerUrl = "http://localhost:3000/api"
 
@@ -161,7 +161,7 @@ export function postCommission(data: FormData){
             body: data,
             credentials: 'include'
         }
-    ).catch((err) => {throw new Error()})
+    ).catch((err) => {console.log(err); throw new Error()})
 }
 
 export async function loginUser({username, password}: {username:string, password: string}){

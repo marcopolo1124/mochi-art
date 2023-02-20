@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { Image as ImageType } from 'types'
+import { Image as ImageType } from '@/types'
 import Link from 'next/link'
 const GalleryImage = ({title, file_name}: ImageType) => {
   const src = `/images_gallery/${file_name}`

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { Image as ImageType} from 'types'
+import { Image as ImageType} from '@/types'
 import Image from 'next/image'
-import { getFeatured, deleteImages} from '@/lib'
+import {deleteImages} from '@/lib'
 import { FiTrash } from 'react-icons/fi'
 import GalleryImageForm from './GalleryImageForm'
 import Popup from './Popup'
@@ -57,7 +57,7 @@ const EditGallery = ({images}: imagesProps) => {
 function GalleryImage({image, handleSelect, handleDeSelect}: {image: ImageType, handleSelect: (image: ImageType) => () => void, handleDeSelect: (image: ImageType) => () => void}) {
     const {file_name, title} = image
     const [clicked, setClicked] = useState<boolean>(false)
-    const src = `${process.env.NEXT_PUBLIC_SERVER_URL}/static-gallery/${file_name}`
+    const src = `/images_gallery/${file_name}`
     const toggleSelect = handleSelect(image)
     const toggleDeSelect = handleDeSelect(image)
     const handleClick = () => {

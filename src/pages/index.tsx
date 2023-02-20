@@ -1,5 +1,5 @@
 import { getImages} from '@/lib'
-import { Image } from 'types'
+import { Image } from '@/types'
 import React from 'react'
 import pool from '@/lib/db/pool'
 import { HeroBanner, Featured, Navbar } from '../components'

@@ -22,3 +22,4 @@ const handler = nc<NextApiRequest, NextApiResponse>()
     })
 
 export default handler
+
