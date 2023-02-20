@@ -12,7 +12,6 @@ const RouteGuard = ({children}: {children: JSX.Element}) => {
     useEffect(()=>{
         getUser()
             .then((value) => {
-                console.log(value)
                 if (value.user?.username){
                     setAuth("true")
                     
