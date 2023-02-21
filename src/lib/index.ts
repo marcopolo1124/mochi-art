@@ -1,6 +1,6 @@
 import { Image } from "@/types"
 
-const ServerUrl = "https://miiyachi-art-store.vercel.app/"
+const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
 if (!ServerUrl){
     throw new Error()
