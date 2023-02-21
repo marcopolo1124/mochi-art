@@ -59,6 +59,7 @@ function GalleryImage({image, handleSelect, handleDeSelect}: {image: ImageType, 
     const {file_name, title} = image
     const [clicked, setClicked] = useState<boolean>(false)
     const src = `${apiRoute}/static/images_gallery/${file_name}`
+    console.log(src)
     const toggleSelect = handleSelect(image)
     const toggleDeSelect = handleDeSelect(image)
     const handleClick = () => {

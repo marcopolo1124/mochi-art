@@ -27,7 +27,7 @@ a {
 
 .main-container{
 max-width: 1400px; 
-margin: auto;
+margin: 0 30px;
 width: 100%;
 
 }

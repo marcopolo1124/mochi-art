@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
+const ImageDomain = process.env.IMAGE_DOMAIN
 const nextConfig = {
   reactStrictMode: true,
-  images: {domains: ['miiyachi-art-api.onrender.com']},
+  images: {domains: [ImageDomain]},
 }
 
 module.exports = nextConfig
