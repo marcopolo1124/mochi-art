@@ -57,13 +57,14 @@ function ImageContainer({image}: ImageProp){
                     width={1400}
                 />
             </div>
-            
+            <div className='layout'>
             <div className="image-detail-container">
                 <h2>{title}</h2>
                 <p id="date-posted">{dateString}</p>
                 <div className="image-description">
                     {parseDetail(image_description)}
                 </div>
+            </div>
             </div>
 
         </div>
