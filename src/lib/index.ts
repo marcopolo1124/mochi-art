@@ -1,6 +1,6 @@
 import { Image } from "@/types"
 
-const ServerUrl = "http://localhost:3000/api"
+const ServerUrl = "https://miiyachi-art-store.vercel.app/"
 
 if (!ServerUrl){
     throw new Error()
