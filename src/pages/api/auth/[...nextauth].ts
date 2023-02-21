@@ -35,7 +35,7 @@ const authOptions: NextAuthOptions = {
             return baseUrl
         }
     },
-    secret: process.env.SESSION_SECRET
+    secret: '3973cbaa-bc12-4a8d-af61-e8174aee78d2'
 }
 
 export default NextAuth(authOptions)
