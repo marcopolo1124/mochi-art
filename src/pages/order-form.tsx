@@ -5,6 +5,7 @@ import { postCommission } from '@/lib'
 import { getStatus } from '@/lib'
 import { Navbar } from '@/components'
 import ReCAPTCHA from "react-google-recaptcha";
+import pool from '@/lib/db/pool'
 
 type CommissionScope = "bust" | "half-body" | "full-body" | ""
 type CommissionType = "sketch" | "colored-sketch" | "full-render" | "vtuber" | ""
@@ -14,15 +15,18 @@ type commissionProps = {
     art_trade_open: boolean
   }
 
-export async function getServerSideProps(){
-try{
-    const props = await getStatus()
-    return {props}
-} catch(err){
-    console.log(err)
-    return {props: {commission_open: false, art_trade_open: false}}
-}
-}
+  export async function getServerSideProps(){
+    try{
+      const state = await pool.query(
+        'SELECT commission_open, art_trade_open FROM site.state'
+      )
+      return {props: state.rows[0]}
+    } catch(err){
+      console.log(err)
+      return {props: {commission_open: false, art_trade_open: false}}
+    }
+  }
+  
 
 const OrderFormContainer = ({commission_open}: commissionProps) => {
     return (
