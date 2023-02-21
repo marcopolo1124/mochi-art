@@ -2,13 +2,16 @@ import React, {useState} from 'react'
 import { getStatus } from '@/lib'
 import Link from 'next/link'
 import { Navbar } from '@/components'
+import pool from '@/lib/db/pool'
 
 
 
 export async function getServerSideProps(){
   try{
-    const props = await getStatus()
-    return {props}
+    const state = await pool.query(
+      'SELECT commission_open, art_trade_open FROM site.state'
+    )
+    return {props: state.rows[0]}
   } catch(err){
     console.log(err)
     return {props: {commission_open: false, art_trade_open: false}}
