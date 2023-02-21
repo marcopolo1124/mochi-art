@@ -8,37 +8,15 @@ import pool from '@/lib/db/pool'
 import { GetServerSidePropsContext } from 'next'
 
 const apiRoute = process.env.NEXT_PUBLIC_SERVER_URL?process.env.NEXT_PUBLIC_SERVER_URL: ""
-const ImageDetail = () => {
-  
-  const router = useRouter()
-  const {fileName} = router.query
+const ImageDetail = ({image}: ImageProp) => {
 
-  const [imageDetail, setImageDetail] = useState<ImageType>({
-    title: "",
-    file_name: "",
-    image_description: "",
-    date_posted: "",
-    featured: false
-  })
 
-  useEffect(() => {
-    if (typeof(fileName) !== "string"){
-        return
-    }
-    getImage(fileName)
-        .then(({image}) => {
-            setImageDetail(image)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-  }, [fileName])
   return (
     <>
     <Navbar/>
     <div className="layout">
         <main className="image-page-container">
-            {imageDetail.file_name? <ImageContainer image={imageDetail}/>: <h2>404</h2>}
+            {image? <ImageContainer image={image}/>: <h2>404</h2>}
         </main>   
     </div>
     </>
