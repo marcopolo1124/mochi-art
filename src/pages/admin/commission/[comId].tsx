@@ -4,7 +4,7 @@ import { CommissionType } from '@/types'
 import {GetServerSidePropsContext} from 'next'
 import Image from 'next/image'
 import { RouteGuard } from '@/components'
-
+import pool from '@/lib/db/pool'
 const apiRoute = process.env.NEXT_PUBLIC_SERVER_URL?process.env.NEXT_PUBLIC_SERVER_URL: ""
 
 const Commission = ({commission, images}: {commission: CommissionType, images: any}) => {
@@ -59,8 +59,36 @@ export async function getServerSideProps(context: GetServerSidePropsContext){
   if (typeof(comId) !== "string"){
     return {props: {commission: com, images: null}}
   }
-  const {commission, images} = await getCommission(comId)
-  return {props: {commission, images}}
+
+  try{
+    const images = pool.query(
+        'SELECT * FROM commissions.commission_images WHERE commission_id=$1',
+        [comId]
+    )
+
+    const commission = await pool.query(
+        'SELECT * FROM commissions.commissions WHERE id=$1',
+        [comId]
+    )
+
+    if (commission.rows.length > 0){
+        return ({props: {
+            commission: JSON.parse(JSON.stringify(commission.rows[0])),
+            images: (await images).rows
+        }})
+    } else{
+        return( {props: {
+            commission: null,
+            images: []
+        }})
+    }
+  }catch (err){
+      console.log(err)
+      return( {props: {
+        commission: null,
+        images: []
+    }})
+  }
 }
 
 type ComImageType = {commission_id: string, file_name: string}

@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) =>{
         const fileName = crypto.randomUUID() + path.extname(file.originalname)
+        console.log(fileName)
         cb(null, fileName)
     }
 })
@@ -20,7 +21,7 @@ const upload = multer({storage: storage})
 const multipleUpload = upload.array("references")
 
 interface FileRequest extends NextApiRequest {
-    files: { [references: string]: Express.Multer.File[] };
+    files:  Express.Multer.File[] ;
 }
 
 
@@ -37,7 +38,8 @@ const handler = nc<NextApiRequest, NextApiResponse>()
                 [id, name, email, characterName, numberOfCharacters, scope, comType, details]
             )
             // const promises = []
-            images.references?.forEach((reference) => {
+            console.log("files", req.files)
+            images.forEach((reference) => {
                 pool.query(
                     "INSERT INTO commissions.commission_images (commission_id, file_name)\
                      VALUES ($1, $2)",
