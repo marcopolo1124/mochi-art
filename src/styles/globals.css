@@ -76,7 +76,7 @@ span.navbar-menu-item{
 }
 
 .navbar-menu{
-  width: 250px;
+  /* width: 250px; */
   display: flex;
   justify-content: space-around;
 }
