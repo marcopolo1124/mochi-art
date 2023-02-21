@@ -16,10 +16,12 @@ const Home = ({gallery}: homeProps) => {
     <div className="layout">
       <div className="home">
           <HeroBanner/>
-          <main className='main-container'>
-          {gallery !== null? <Featured images={gallery}/>: <p>Cannot load featured</p>}
-          {/* <Gallery images={gallery.images}/> */}
-          </main>
+          <div className='layout'>
+            <main className='main-container'>
+            {gallery !== null? <Featured images={gallery}/>: <p>Cannot load featured</p>}
+            {/* <Gallery images={gallery.images}/> */}
+            </main>
+          </div>
       </div>
     </div>
 
