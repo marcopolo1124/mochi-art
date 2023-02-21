@@ -385,7 +385,7 @@ hr{
 .image-page-container{
   color: #afafaf;
   width: 100%;
-  min-width: 1000px;
+  min-width: 500px;
   max-width: 1400px;
   background-color: #3f3f3f;
   /* display: flex;
@@ -395,7 +395,7 @@ hr{
 
 
 .image-container{
-  min-width: 700px;
+  min-width: 500px;
   max-width: 1400px;
   background-color: #2f2f2f;
   display: flex;
