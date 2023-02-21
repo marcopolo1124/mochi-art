@@ -7,7 +7,7 @@ const GalleryImage = ({title, file_name}: ImageType) => {
   return (
     <div className="product-card">
       <Link href={`image/${file_name}`}>
-        <Image 
+        <img 
           src={`/images_gallery/${file_name}`}
           className="product-image"
           height={300}
