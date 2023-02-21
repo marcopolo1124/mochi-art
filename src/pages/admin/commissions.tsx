@@ -1,4 +1,4 @@
-// import { RouteGuard } from '@/components'
+import { RouteGuard } from '@/components'
 import { getCommissions } from '@/lib'
 import React, { useEffect, useState } from 'react'
 import { CommissionType } from '@/types'
@@ -24,7 +24,7 @@ const Commissions = ({commissions, rowCount}: {commissions: CommissionType[], ro
     }, [viewStatus, page])
 
     return (
-        // <RouteGuard>
+        <RouteGuard>
             <div className='layout'>
                 <div className='home'>
                     <div className="main-container">
@@ -42,7 +42,7 @@ const Commissions = ({commissions, rowCount}: {commissions: CommissionType[], ro
                     <span className="page-count"><input type="number" value={page} max={pageCount} min={1} onChange={({target}) => {setPage(parseInt(target.value))}}/>/{pageCount}</span>
                 </div>
             </div>
-        // </RouteGuard>
+        </RouteGuard>
     )
 }
 

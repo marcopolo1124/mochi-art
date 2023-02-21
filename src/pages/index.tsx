@@ -10,7 +10,6 @@ type homeProps = {
 
 const Home = ({gallery}: homeProps) => {
   
-  console.log(gallery)
   return (
     <>
     <Navbar/>

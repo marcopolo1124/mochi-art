@@ -3,32 +3,17 @@ import { getUser } from '@/lib'
 import Login from './Login'
 import AdminNav from './AdminNav'
 import { logout } from '@/lib'
+import {useSession, signIn} from 'next-auth/react'
+
 
 const RouteGuard = ({children}: {children: JSX.Element}) => {
-    const [auth, setAuth] = useState<string>("blank")
-    const setAuthToTrue = () =>{
-        setAuth("true")
-    }
-    useEffect(()=>{
-        getUser()
-            .then((value) => {
-                if (value.user?.username){
-                    setAuth("true")
-                    
-                } else{
-                    setAuth("false")
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+    const session = useSession()
     return (
         <>
-            {auth==="blank" && <div id="blank"/>}
-            {auth==="true" && <AdminNav handleLogout={() => {logout().then(() => setAuth("false"))}}/>}
-            {auth==="true" && children}
-            {auth==="false" && <Login setAuth={setAuthToTrue}/>}
+            {session.status==="loading" && <div id="blank"/>}
+            {session.status==="authenticated" && <AdminNav/>}
+            {session.status==="authenticated" && children}
+            {session.status==="unauthenticated" && signIn()}
         </>
     )
 }

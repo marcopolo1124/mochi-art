@@ -167,7 +167,6 @@ function FileContainer({file, removeReference, index}: fileProps) {
     const handleClick = () =>{
         removeReference(index)
     }
-    console.log(file)
     return (
             <div className="file-container"><p>{file.name}</p><span onClick={handleClick}>&times;</span></div>
     )

@@ -6,12 +6,10 @@ import pool from '@/lib/db/pool'
 import { NextApiRequest, NextApiResponse } from 'next'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log(file)
         cb(null, "/commission_gallery")
     },
     filename: (req, file, cb) =>{
         const fileName = crypto.randomUUID() + path.extname(file.originalname)
-        console.log(fileName)
         cb(null, fileName)
     }
 })

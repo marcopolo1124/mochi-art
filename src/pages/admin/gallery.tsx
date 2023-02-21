@@ -2,19 +2,19 @@ import { getImages } from '@/lib'
 import { EditGallery } from '@/components'
 import { Image } from '@/types'
 import React from 'react'
-// import {RouteGuard} from '@/components'
+import {RouteGuard} from '@/components'
 
 
 const gallery = ({gallery}: {gallery: {images: Image[]}}) => {
     return (
-        // <RouteGuard>
+        <RouteGuard>
             <div className="layout">
                 <div className='home'>
                     {/* <GalleryImageForm/> */}
                     <EditGallery images={gallery.images}/>
                 </div>
             </div>
-        // </RouteGuard>
+        </RouteGuard>
   )
 }
 

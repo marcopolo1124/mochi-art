@@ -1,14 +1,15 @@
-// import { RouteGuard } from '@/components'
+import { RouteGuard } from '@/components'
 import { getStatus} from '@/lib'
 import React, {useState} from 'react'
 import { toggleCommissionStatus, toggleArtTradeStatus } from '@/lib'
+
 
 const Admin = ({commission_open, art_trade_open}: {commission_open: boolean, art_trade_open: boolean}) => {
     const [commissionState, setCommissionState] = useState<boolean>(commission_open)
     const [artTradeState, setArtTradeState] = useState<boolean>(art_trade_open)
 
     return (
-        // <RouteGuard>
+        <RouteGuard>
             <div className="admin-layout">
                 <div className='admin-container'>
                     <div className='admin-section' id="commission-state">
@@ -37,7 +38,7 @@ const Admin = ({commission_open, art_trade_open}: {commission_open: boolean, art
                     </div>
                 </div>
             </div>
-        // </RouteGuard>
+        </RouteGuard>
     )
 }
 

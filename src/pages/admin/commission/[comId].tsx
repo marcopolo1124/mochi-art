@@ -3,7 +3,7 @@ import { getCommission, updateCommissionStatus } from '@/lib'
 import { CommissionType } from '@/types'
 import {GetServerSidePropsContext} from 'next'
 import Image from 'next/image'
-// import { RouteGuard } from '@/components'
+import { RouteGuard } from '@/components'
 
 const Commission = ({commission, images}: {commission: CommissionType, images: any}) => {
   const {id, character_name, scope, com_type, details, name, email, date_of_purchase, commission_status} = commission
@@ -14,7 +14,7 @@ const Commission = ({commission, images}: {commission: CommissionType, images: a
   }, [viewStatus, id])
   
   return (
-    // <RouteGuard>
+    <RouteGuard>
     <div className='layout'>
       <div className='main-container'>
         <div className='products-heading'>
@@ -35,7 +35,7 @@ const Commission = ({commission, images}: {commission: CommissionType, images: a
         <References images={images}/>
       </div>
     </div>
-    // </RouteGuard>
+    </RouteGuard>
   )
 }
 
@@ -64,7 +64,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext){
 type ComImageType = {commission_id: string, file_name: string}
 
 const References = ({images}: {images: ComImageType[]}) => {
-  console.log(images)
   return (
       <>
       <div className="products-heading">
@@ -80,9 +79,7 @@ const References = ({images}: {images: ComImageType[]}) => {
 
 const ComImage = ({image}: {image: ComImageType}) => {
   const {file_name} = image
-  console.log(image)
   const src = `${process.env.NEXT_PUBLIC_SERVER_URL}/static-commission/${file_name}`
-  console.log(src)
   return (
     <div className="product-card">
         <Image 

@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { Image } from '@/types'
-import { getFeatured } from '@/lib'
 import GalleryImage from './Image'
 
 

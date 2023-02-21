@@ -7,12 +7,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 const commissionsPath = './public/commission_gallery'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log(file)
         cb(null, commissionsPath)
     },
     filename: (req, file, cb) =>{
         const fileName = crypto.randomUUID() + path.extname(file.originalname)
-        console.log(fileName)
         cb(null, fileName)
     }
 })
@@ -30,11 +28,8 @@ const handler = nc<NextApiRequest, NextApiResponse>()
     .post(multipleUpload)
     .post<FileRequest, NextApiResponse>(async (req, res, next) => {
         const images = req.files
-        console.log(images)
-        console.log(req.body)
         try{
             const {name, email, characterName, numberOfCharacters, scope, comType, details} = req.body
-            console.log(name, email, characterName)
             const id = crypto.randomUUID()
             await pool.query(
                 "INSERT INTO commissions.commissions (id, name, email, character_name, number_of_characters, scope, com_type, details)\
