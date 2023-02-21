@@ -3,6 +3,9 @@ import { useRouter } from 'next/router'
 import { getImage } from '@/lib'
 import { Image as ImageType } from '@/types'
 import Image from 'next/image'
+import { Navbar } from '@/components'
+import pool from '@/lib/db/pool'
+import { GetServerSidePropsContext } from 'next'
 
 const apiRoute = process.env.NEXT_PUBLIC_SERVER_URL?process.env.NEXT_PUBLIC_SERVER_URL: ""
 const ImageDetail = () => {
@@ -31,11 +34,14 @@ const ImageDetail = () => {
         })
   }, [fileName])
   return (
+    <>
+    <Navbar/>
     <div className="layout">
         <main className="image-page-container">
             {imageDetail.file_name? <ImageContainer image={imageDetail}/>: <h2>404</h2>}
         </main>   
     </div>
+    </>
   )
 }
 
@@ -69,6 +75,23 @@ function ImageContainer({image}: ImageProp){
 
         </div>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext){
+    try{
+        const {fileName} = context.query
+        const images = await pool.query(
+            'SELECT * FROM site.gallery_images WHERE file_name=$1',
+            [fileName]
+        )
+        if (images.rows.length > 0){
+            return({props: {image: images.rows[0]}})
+        } else{
+            return({props: {image: null}})
+        }
+    } catch (err){
+        console.log(err)
+    }
 }
 
 export default ImageDetail
