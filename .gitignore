@@ -5,8 +5,8 @@
 /.pnp
 *.env
 
-*commission_gallery
-*images_gallery
+# *commission_gallery
+# *images_gallery
 
 # testing
 /coverage
