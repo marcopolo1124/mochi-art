@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import pool from '@/lib/db/pool'
 
-const ImageGallery = './images_gallery'
+const ImageGallery = './static/images_gallery'
 
 interface FileNameReq extends NextApiRequest {
     fileName: string;

@@ -6,7 +6,7 @@ import fs from 'fs'
 const handler = nc<NextApiRequest, NextApiResponse>()
     .get(async (req, res, next) => {
         const fileName = req.query.fileName
-        const filePath = `./commission_gallery/${fileName}`
+        const filePath = `./static/commission_gallery/${fileName}`
         const imageBuffer = fs.readFileSync(filePath)
         res.setHeader("Content-Type", "image/jpg")
         return res.send(imageBuffer)
