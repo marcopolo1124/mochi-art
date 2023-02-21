@@ -1,6 +1,6 @@
 import { Image } from "@/types"
 
-const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL
+const ServerUrl = process.env.NEXT_PUBLIC_SERVER_URL? process.env.NEXT_PUBLIC_SERVER_URL: "/api"
 
 if (!ServerUrl){
     throw new Error()
