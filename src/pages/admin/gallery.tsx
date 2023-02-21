@@ -3,31 +3,33 @@ import { EditGallery } from '@/components'
 import { Image } from '@/types'
 import React from 'react'
 import {RouteGuard} from '@/components'
+import pool from '@/lib/db/pool'
 
 
-const gallery = ({gallery}: {gallery: {images: Image[]}}) => {
+const Gallery = ({gallery}: {gallery: Image[]}) => {
     return (
         <RouteGuard>
             <div className="layout">
                 <div className='home'>
                     {/* <GalleryImageForm/> */}
-                    <EditGallery images={gallery.images}/>
+                    <EditGallery images={gallery}/>
                 </div>
             </div>
         </RouteGuard>
   )
 }
 
-export default gallery
+export default Gallery
 
 export async function getServerSideProps() {
     try{
-        const gallery = await getImages("date", 1, 1000)
-        return {props: {gallery}}
-    }catch(err){
-        return {props: {gallery: []}}
+      const gallery = await pool.query(
+        'SELECT * FROM site.gallery_images'
+      )
+      return {props: {gallery: JSON.parse(JSON.stringify(gallery.rows))}}
+    } catch(error){
+      console.log(error)
+      return {props: {gallery: null}}
     }
-
-  
   }
   

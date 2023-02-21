@@ -79,7 +79,7 @@ const References = ({images}: {images: ComImageType[]}) => {
 
 const ComImage = ({image}: {image: ComImageType}) => {
   const {file_name} = image
-  const src = `${process.env.NEXT_PUBLIC_SERVER_URL}/static-commission/${file_name}`
+  const src = `/commission_gallery/${file_name}`
   return (
     <div className="product-card">
         <Image 
