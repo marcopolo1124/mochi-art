@@ -4,6 +4,7 @@ import { getImage } from '@/lib'
 import { Image as ImageType } from '@/types'
 import Image from 'next/image'
 
+const apiRoute = process.env.NEXT_PUBLIC_SERVER_URL?process.env.NEXT_PUBLIC_SERVER_URL: ""
 const ImageDetail = () => {
   
   const router = useRouter()
@@ -44,7 +45,7 @@ function ImageContainer({image}: ImageProp){
     const {file_name, image_description, title, date_posted} = image
     const dateString = new Date(date_posted).toLocaleDateString()
     const parseDetail = (string: String) => string.split('\n').map((line, index) => <p key={`${line}${index}`}>{line}</p>)
-    const src = `/images_gallery/${file_name}`
+    const src = `${apiRoute}/static/images_gallery/${file_name}`
     return (
         <div>
             <div className="image-container">

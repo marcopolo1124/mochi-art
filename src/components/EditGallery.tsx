@@ -8,6 +8,7 @@ import Popup from './Popup'
 
 type Images = ImageType[]
 type imagesProps = {images: Images}
+const apiRoute = process.env.NEXT_PUBLIC_SERVER_URL?process.env.NEXT_PUBLIC_SERVER_URL: ""
 
 
 const EditGallery = ({images}: imagesProps) => {
@@ -57,7 +58,7 @@ const EditGallery = ({images}: imagesProps) => {
 function GalleryImage({image, handleSelect, handleDeSelect}: {image: ImageType, handleSelect: (image: ImageType) => () => void, handleDeSelect: (image: ImageType) => () => void}) {
     const {file_name, title} = image
     const [clicked, setClicked] = useState<boolean>(false)
-    const src = `/images_gallery/${file_name}`
+    const src = `${apiRoute}/static/images_gallery/${file_name}`
     const toggleSelect = handleSelect(image)
     const toggleDeSelect = handleDeSelect(image)
     const handleClick = () => {

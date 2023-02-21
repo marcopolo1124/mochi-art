@@ -4,19 +4,7 @@ import crypto from 'crypto'
 import nc from 'next-connect'
 import pool from '@/lib/db/pool'
 import { NextApiRequest, NextApiResponse } from 'next'
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "/commission_gallery")
-    },
-    filename: (req, file, cb) =>{
-        const fileName = crypto.randomUUID() + path.extname(file.originalname)
-        cb(null, fileName)
-    }
-})
 
-const upload = multer({storage: storage})
-
-const multipleUpload = upload.array("references")
 
 
 const handler = nc<NextApiRequest, NextApiResponse>()

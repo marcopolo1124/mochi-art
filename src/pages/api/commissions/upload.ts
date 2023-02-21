@@ -4,7 +4,7 @@ import crypto from 'crypto'
 import nc from 'next-connect'
 import pool from '@/lib/db/pool'
 import { NextApiRequest, NextApiResponse } from 'next'
-const commissionsPath = './public/commission_gallery'
+const commissionsPath = './commission_gallery'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, commissionsPath)

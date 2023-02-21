@@ -5,6 +5,8 @@ import {GetServerSidePropsContext} from 'next'
 import Image from 'next/image'
 import { RouteGuard } from '@/components'
 
+const apiRoute = process.env.NEXT_PUBLIC_SERVER_URL?process.env.NEXT_PUBLIC_SERVER_URL: ""
+
 const Commission = ({commission, images}: {commission: CommissionType, images: any}) => {
   const {id, character_name, scope, com_type, details, name, email, date_of_purchase, commission_status} = commission
   const [viewStatus, setViewStatus] = useState(commission_status)
@@ -79,7 +81,7 @@ const References = ({images}: {images: ComImageType[]}) => {
 
 const ComImage = ({image}: {image: ComImageType}) => {
   const {file_name} = image
-  const src = `/commission_gallery/${file_name}`
+  const src = `${apiRoute}/static/commission_gallery/${file_name}`
   return (
     <div className="product-card">
         <Image 
