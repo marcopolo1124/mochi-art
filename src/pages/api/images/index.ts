@@ -50,7 +50,15 @@ const handler = nc<NextApiRequest, NextApiResponse>()
             next(err)
         }
     })
-    .post(upload.single('image'))
+    .post((req: any, res:any, next) => {
+        const single = upload.single('image')
+        single(req, res, function(err) {
+            if(err){
+                console.log(err)
+            }
+            next()
+        })
+    })
     .post<FileNameReq, NextApiResponse>(async (req, res, next) => {
         try{
             const fileName = req.fileName
@@ -66,7 +74,7 @@ const handler = nc<NextApiRequest, NextApiResponse>()
             )
             res.status(201).send({message: 'image added'})
         } catch (e){
-    
+            console.log(e)
             next(e)
         }
     })
